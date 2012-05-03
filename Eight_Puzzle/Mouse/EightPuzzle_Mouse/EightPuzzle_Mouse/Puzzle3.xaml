@@ -1,0 +1,16 @@
+﻿<Window x:Class="EightPuzzle_Mouse.Puzzle3"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Puzzle3" Height="1024" Width="1280" WindowStyle="None" WindowState="Maximized" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <!--IMAGE RESOURCES-->
+        <Image x:Key="MasterImage1" Source="blackbackground.jpg"/>
+        
+    </Window.Resources>
+    <Canvas>
+        <!--PANEL THAT HOSTS THE GAZE GRID-->
+        <StackPanel Canvas.Top="50" Canvas.Left="200" Margin="100" x:Name="PuzzleHostingPanel" />
+        <Image Width="150" Height="150" Canvas.Bottom="5" Canvas.Left="10"  Source="completedPuzzle.jpg" />
+    </Canvas>
+</Window>

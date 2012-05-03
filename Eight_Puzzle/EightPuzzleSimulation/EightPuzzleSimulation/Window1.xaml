@@ -1,0 +1,18 @@
+﻿<Window x:Class="EightPuzzleSimulation.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Window1" Height="374" Width="475" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Name="btnMPuzzle" Content=" Mouse Puzzle" FontSize="20" Click="btnMPuzzle_Click" />
+        <Button Name="btnGAPuzzle" Content=" Gaze-Augmented Puzzle" Grid.Row="1" FontSize="20" Click="btnGAPuzzle_Click" />
+        <Button Name="btnDTPuzzle" Content=" Dwell-Time Puzzle" Grid.Row="2" FontSize="20" Click="btnDTPuzzle_Click" />
+        <Button Name="btnExit" Content=" Exit Simulation" Grid.Row="3" FontSize="20" Click="btnExit_Click" />
+
+    </Grid>
+</Window>
