@@ -16,9 +16,9 @@ namespace EightPuzzle_Mouse
     /// <summary>
     /// Interaction logic for PreTrail.xaml
     /// </summary>
-    public partial class PreTrail : Window
+    public partial class PreTrial : Window
     {
-        public PreTrail()
+        public PreTrial()
         {
             InitializeComponent();
         }
@@ -29,19 +29,12 @@ namespace EightPuzzle_Mouse
             {
                 this.Close();
             }
-            else if (e.Key == Key.PageUp)
-            {
-                Window thinkAloud = new ThinkAloud();
-                thinkAloud.Show();
-                this.Close();
-            }
             else
             {
                 Window trial = new Trial();
                 trial.Show();
                 this.Close();
             }
-            
         }
     }
 }

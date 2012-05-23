@@ -68,7 +68,6 @@ namespace EightPuzzle_Mouse
 
 
             PuzzleHostingPanel.IsEnabled = true;    //ENABLE THE PUZZLE, SO THAT TILES CAN BE SELECTED
-
         }
 
         /// <summary>
@@ -76,12 +75,10 @@ namespace EightPuzzle_Mouse
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //start a new game when the puzzle is loaded
             NewGame();
-
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -92,21 +89,16 @@ namespace EightPuzzle_Mouse
             }
             else if (e.Key == Key.PageDown)
             {
-                Window prePuzzle1 = new PrePuzzle1();
+                Window prePuzzle1 = new PrePuzzle(0);
                 prePuzzle1.Show();
                 this.Close();
             }
             else if (e.Key == Key.PageUp)
             {
-                Window preTrial = new PreTrail();
+                Window preTrial = new PreTrial();
                 preTrial.Show();
                 this.Close();
             }
-                
-
         }
-       
-        
-
     }
 }

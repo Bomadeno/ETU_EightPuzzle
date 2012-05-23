@@ -16,9 +16,9 @@ using System.Collections;
 namespace EightPuzzle_Mouse
 {
     /// <summary>
-    /// Interaction logic for Puzzle3.xaml
+    /// Interaction logic for Puzzle1.xaml
     /// </summary>
-    public partial class Puzzle3 : Window
+    public partial class Puzzle : Window
     {
         #region PRIVATE PROPERTIES
         MousePuzzleGrid _MousePuzzleGrid;                         //instance of MousePuzzleGrid
@@ -28,12 +28,15 @@ namespace EightPuzzle_Mouse
 
         private StreamReader _sr;               //read stream from text file
         private ArrayList _gameConfigList;      //list of game configurations
+        private int puzzleNumber;
 
         #endregion
         
-        public Puzzle3()
+
+        public Puzzle(int puzzleNumber)
         {
             InitializeComponent();
+            this.puzzleNumber = puzzleNumber;
             _numRows = 3; //default _numRows value
         }
 
@@ -58,14 +61,26 @@ namespace EightPuzzle_Mouse
 
             _MousePuzzleGrid.PuzzleSize = _puzzleSize; //size of the puzzle
 
+            //get the game configuration
             GetGameConfig();
-            
+
             PuzzleHostingPanel.Children.Add(_MousePuzzleGrid); //add grid to the user interface
 
             PuzzleHostingPanel.IsEnabled = true;    //ENABLE THE PUZZLE, SO THAT TILES CAN BE SELECTED
 
         }
 
+        /// <summary>
+        /// Open a new game once the window is opened
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //start a new game when the puzzle is loaded
+            NewGame();
+        }
+        
         private void GetGameConfig()
         {
             _sr = new StreamReader("c:\\EightPuzzleConfig.txt");
@@ -83,43 +98,24 @@ namespace EightPuzzle_Mouse
 
             if (_gameConfigList != null)
             {
-                if (_gameConfigList[2].ToString() == "A")
+                if (_gameConfigList[puzzleNumber].ToString() == "A")
                 {
                     _MousePuzzleGrid.ConfigType = "A";           //Use game congiguration A
                     _MousePuzzleGrid.StartConfig("ConfigA");       //Use start configuration A
                 }
-                else if (_gameConfigList[2].ToString() == "B")
+                else if (_gameConfigList[puzzleNumber].ToString() == "B")
                 {
                     _MousePuzzleGrid.ConfigType = "B";         //Use game configuration B
                     _MousePuzzleGrid.StartConfig("ConfigB");       //Use start configuration B
                 }
-                else if (_gameConfigList[2].ToString() == "C")
+                else if (_gameConfigList[puzzleNumber].ToString() == "C")
                 {
                     _MousePuzzleGrid.ConfigType = "C";         //Use trial configuration
-                    _MousePuzzleGrid.StartConfig("ConfigC");       //Use the trial configuration to start
+                    _MousePuzzleGrid.StartConfig("C");       //Use the trial configuration to start
                 }
             }
-
-
-
-
-
-
-
         }
-        /// <summary>
-        /// Open a new game once the window is opened
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //start a new game when the puzzle is loaded
-            NewGame();
-
-        }
-
+        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -128,19 +124,25 @@ namespace EightPuzzle_Mouse
             }
             else if (e.Key == Key.PageDown)
             {
-                Window thankYou = new ThankYou();
-                thankYou.Show();
-                this.Close();
+                if (puzzleNumber < 2)
+                {
+                    Window nextPrePuzzle = new PrePuzzle(puzzleNumber + 1);
+                    nextPrePuzzle.Show();
+                    this.Close();
+                }
+                else
+                {
+                    Window thankYou = new ThankYou();
+                    thankYou.Show();
+                    this.Close();
+                }
             }
             else if (e.Key == Key.PageUp)
             {
-                Window prePuzzle3 = new PrePuzzle3();
-                prePuzzle3.Show();
+                Window thisPuzzlesPrePuzzle = new PrePuzzle(puzzleNumber);
+                thisPuzzlesPrePuzzle.Show();
                 this.Close();
             }
-
         }
-
-       
     }
 }

@@ -16,11 +16,14 @@ namespace EightPuzzle_Mouse
     /// <summary>
     /// Interaction logic for PrePuzzle1.xaml
     /// </summary>
-    public partial class PrePuzzle1 : Window
+    public partial class PrePuzzle : Window
     {
-        public PrePuzzle1()
+        private int puzzleNumber;
+
+        public PrePuzzle(int puzzleNumber)
         {
             InitializeComponent();
+            this.puzzleNumber = puzzleNumber;
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -30,16 +33,24 @@ namespace EightPuzzle_Mouse
             }
             else if (e.Key == Key.PageUp)
             {
-                Window trial = new Trial();
-                trial.Show();
+                if (puzzleNumber > 0)
+                {
+                    Window previousPuzzle = new PrePuzzle(puzzleNumber - 1);
+                    previousPuzzle.Show();
+                }
+                else
+                {
+                    Window trial = new Trial();
+                    trial.Show();
+                }
+                this.Close();
             }
             else
             {
-                Window puzzle1 = new Puzzle1();
+                Window puzzle1 = new Puzzle(puzzleNumber);
                 puzzle1.Show();
                 this.Close();
             }
-
         }
     }
 }

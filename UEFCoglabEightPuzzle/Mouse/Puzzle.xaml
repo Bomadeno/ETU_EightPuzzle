@@ -1,7 +1,7 @@
-﻿<Window x:Class="EightPuzzle_Mouse.Puzzle2"
+﻿<Window x:Class="EightPuzzle_Mouse.Puzzle"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Puzzle2" Height="1024" Width="1280" WindowStyle="None" WindowState="Maximized" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+    Title="Puzzle1" Height="1024" Width="1280" WindowStyle="None" WindowState="Maximized" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
 
     <Window.Resources>
         <!--IMAGE RESOURCES-->

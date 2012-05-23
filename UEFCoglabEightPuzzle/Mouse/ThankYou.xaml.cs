@@ -31,7 +31,7 @@ namespace EightPuzzle_Mouse
             }
             else if (e.Key == Key.PageUp)
             {
-                Window puzzle3 = new Puzzle3();
+                Window puzzle3 = new Puzzle(2);
                 puzzle3.Show();
                 this.Close();
             }
