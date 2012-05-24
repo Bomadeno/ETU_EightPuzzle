@@ -1,7 +1,7 @@
 ﻿<Application x:Class="EightPuzzle_Mouse.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    StartupUri="PreTrial.xaml">
+    StartupUri="PrePuzzle.xaml">
     <Application.Resources>
          
     </Application.Resources>

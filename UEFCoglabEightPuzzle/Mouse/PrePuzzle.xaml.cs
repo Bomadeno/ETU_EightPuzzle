@@ -20,11 +20,14 @@ namespace EightPuzzle_Mouse
     {
         private int puzzleNumber;
 
+        public PrePuzzle() : this(0) {}
+
         public PrePuzzle(int puzzleNumber)
         {
             InitializeComponent();
             this.puzzleNumber = puzzleNumber;
         }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -37,13 +40,8 @@ namespace EightPuzzle_Mouse
                 {
                     Window previousPuzzle = new PrePuzzle(puzzleNumber - 1);
                     previousPuzzle.Show();
+                    this.Close();
                 }
-                else
-                {
-                    Window trial = new Trial();
-                    trial.Show();
-                }
-                this.Close();
             }
             else
             {

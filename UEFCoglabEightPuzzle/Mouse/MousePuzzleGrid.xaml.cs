@@ -19,11 +19,11 @@ namespace EightPuzzle_Mouse
     public partial class MousePuzzleGrid : Grid
     {
         #region PRIVATE FIELDS
-        private PuzzleLogic _puzzleLogic; //instace of PuzzleLogic
+        private PuzzleLogic _puzzleLogic; //instance of PuzzleLogic
         private Size _masterPuzzleSize = Size.Empty; //Size of the puzzle
         private UIElement _puzzleImage; // the puzzle image to be chopped up
-        private int _numRows = -1; //number of rows (and columns) in the puzzle
-        private string _ConfigType; //Specify the configuration type
+        private int numRows = -1; //number of rows (and columns) in the puzzle
+        private string configType; //Specify the configuration type
 
         private int _moves = 0;      //Number of moves that have been made
         private string _selectedButtonNumber;        //Number of the button that has been clicked
@@ -43,24 +43,6 @@ namespace EightPuzzle_Mouse
         #endregion
 
         #region PUBLIC PROPERTIES
-
-        public int NumRows
-        {
-            get { return _numRows; }
-            set
-            {
-                // Only support setting this once per MousePuzzleGrid instance.
-                if (_numRows != -1)
-                {
-                    throw new InvalidOperationException("NumRows already initialized for this MousePuzzleGrid instance.");
-                }
-                else
-                {
-                    _numRows = value;
-                    CheckToSetup();
-                }
-            }
-        }
 
         public UIElement PuzzleImage
         {
@@ -98,16 +80,16 @@ namespace EightPuzzle_Mouse
 
         public string ConfigType
         {
-            get { return _ConfigType; }
+            get { return configType; }
             set
             {
-                if (_ConfigType != null)
+                if (configType != null)
                 {
                     throw new InvalidOperationException("ElementForPuzzle already initialized for this MousePuzzleGrid instance.");
                 }
                 else
                 {
-                    _ConfigType = value;
+                    configType = value;
                     CheckToSetup();
                 }
             }
@@ -115,7 +97,7 @@ namespace EightPuzzle_Mouse
 
         private void CheckToSetup()
         {
-            if (_numRows != -1 && (_ConfigType != null) && (_puzzleImage != null) && !_masterPuzzleSize.IsEmpty)
+            if (numRows != -1 && (configType != null) && (_puzzleImage != null) && !_masterPuzzleSize.IsEmpty)
             {
                 SetupTheMousePuzzleGridStructure();
             }
@@ -126,17 +108,16 @@ namespace EightPuzzle_Mouse
 
         #endregion
 
-		public MousePuzzleGrid()
-		{
-            //*** DEFAULT CONSTRUCTOR ***
-			InitializeComponent();
+        public MousePuzzleGrid(int numRows)
+        {
+            InitializeComponent();
 
-			// Centralize handling of all clicks in the puzzle grid.
-			//this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
+            // Centralize handling of all clicks in the puzzle grid.
+            //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
             this.AddHandler(MouseButton2.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
-
+            this.numRows = numRows;
            
-		}
+        }
 
         private void SetupTheMousePuzzleGridStructure()
         {
@@ -145,10 +126,10 @@ namespace EightPuzzle_Mouse
             //define the row, column the button will appear in and the button style
 
             //create an instance of puzzleLogic
-            _puzzleLogic = new PuzzleLogic(_numRows);
+            _puzzleLogic = new PuzzleLogic(numRows);
 
             // Define rows and columns in the Grid
-            for (int row = 0; row < _numRows; row++)
+            for (int row = 0; row < numRows; row++)
             {
                 RowDefinition r = new RowDefinition();
                 r.Height = GridLength.Auto;
@@ -161,24 +142,20 @@ namespace EightPuzzle_Mouse
             }
 
             // Now add the buttons
-            switch (_ConfigType)
+            switch (configType)
             {
                 case "T":
-                    {
-                        TrialConfig();
-                    } break;
+                    TrialConfig();
+                    break;
                 case "A":
-                    {
-                        AConfig();
-                    } break;
+                    AConfig();
+                    break;
                 case "B":
-                    {
-                        BConfig();
-                    } break;
+                    BConfig();
+                    break;
                 case "C":
-                    {
-                        CConfig();
-                    } break;
+                    CConfig();
+                    break;
             }
         }
 
@@ -474,40 +451,36 @@ namespace EightPuzzle_Mouse
 
         }
 
-		private void OnPuzzleButtonClick(object sender, RoutedEventArgs e)
+        private void OnPuzzleButtonClick(object sender, RoutedEventArgs e)
         {
             //*** ONCE A TILE HAS BEEN CLICKED MOVE IT IF IT IS A VALID MOVE ***
-            
-               
-                MouseButton2 b = e.Source as MouseButton2;  //identify the button that has been clicked
-                if (b != null)
+
+            MouseButton2 b = e.Source as MouseButton2;  //identify the button that has been clicked
+            if (b != null)
+            {
+                //Get the row and column of the button that has been clicked
+                int row = (int)b.GetValue(Grid.RowProperty);
+                int col = (int)b.GetValue(Grid.ColumnProperty);
+
+                //check to see if which direct the button should be moved
+                MoveStatus moveStatus = _puzzleLogic.GetMoveStatus(row, col);
+
+                if (moveStatus != MoveStatus.BadMove)
                 {
-                    //Get the row and column of the button that has been cliced
-                    int row = (int)b.GetValue(Grid.RowProperty);
-                    int col = (int)b.GetValue(Grid.ColumnProperty);
+                    //as long as the move is valid, animate the movement by calling Animatepiece
+                    AnimatePiece(b, row, col, moveStatus);
+                }
+                else
+                {
+                    //Bad move, so allow a new button to be selected
 
-                    //check to see if which direct the button should be moved
-                    MoveStatus moveStatus = _puzzleLogic.GetMoveStatus(row, col);
-
-                    if (moveStatus != MoveStatus.BadMove)
-                    {
-                        //as long as the move is valid, animate the movement by calling Animatepiece
-                        AnimatePiece(b, row, col, moveStatus);
-                    }
-                    else
-                    {
-                        //Bad move, so allow a new button to be selected
-                       
-                    }//if-else
-                }//if
-           
-        }//OnpuzzleButtonClick
+                }
+            }
+        }
              
-		private void AnimatePiece(MouseButton2 b, int row, int col, MoveStatus moveStatus)
-		{
-            
-         
-			double distance; //distance the tile should move
+        private void AnimatePiece(MouseButton2 b, int row, int col, MoveStatus moveStatus)
+        {
+            double distance; //distance the tile should move
             bool isMoveHorizontal; //determine íf move is horizontal or vertical
 
             //get the direction the tile should move
@@ -568,15 +541,13 @@ namespace EightPuzzle_Mouse
                 //rootFE.RenderTransform.BeginAnimation(directionProperty, slideAnim);
                 b.RenderTransform.BeginAnimation(directionProperty, slideAnim);
             }
-		}
-
-     
+        }
        
-		private void MovePiece(MouseButton2 b, int row, int col)
-		{ //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
+        private void MovePiece(MouseButton2 b, int row, int col)
+        { //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
             //Identify the cell to move
             
-			PuzzleCell newPosition = _puzzleLogic.MovePiece(row, col);
+            PuzzleCell newPosition = _puzzleLogic.MovePiece(row, col);
             try
             {
                 //change the position of the tile in the grid
@@ -589,29 +560,25 @@ namespace EightPuzzle_Mouse
                 if (_puzzleLogic.CheckForPuzzleCompleted())
                 {
                     this.IsEnabled = false;
-                   
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Movement error !!!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-		
         }
 
         public void MixUpPuzzle()
-		{ //*** SCRAMBLE THE PUZZLE ***
-			_puzzleLogic.MixUpPuzzle(); //Call MixUpPuzzle to shuffle and move the puzzles
+        { //*** SCRAMBLE THE PUZZLE ***
+            _puzzleLogic.MixUpPuzzle(); //Call MixUpPuzzle to shuffle and move the puzzles
             
             short cellNumber = 1;
-			foreach (Button b in this.Children)
-			{
-				PuzzleCell location = _puzzleLogic.FindCell(cellNumber++);
-				b.SetValue(Grid.ColumnProperty, location.Col);
-				b.SetValue(Grid.RowProperty, location.Row);
-                              
-			}
+            foreach (Button b in this.Children)
+            {
+                PuzzleCell location = _puzzleLogic.FindCell(cellNumber++);
+                b.SetValue(Grid.ColumnProperty, location.Col);
+                b.SetValue(Grid.RowProperty, location.Row);         
+            }
         }
 
         public void StartConfig(string config)
@@ -643,10 +610,7 @@ namespace EightPuzzle_Mouse
                         _puzzleLogic.Config_C();
                     } break;
             }
-
-
         }
-
 
         #region TEXT FILE DATA
         private void Grid_Loaded(object sender, RoutedEventArgs e)
@@ -654,7 +618,7 @@ namespace EightPuzzle_Mouse
             //get the time the window was opened
             _gridOpenTime = DateTime.Now;
 
-            _currentFile = "Mouse_Puzzle_Config" + _ConfigType + "_" + DateTime.Now.ToFileTime() + ".txt";
+            _currentFile = "Mouse_Puzzle_Config" + configType + "_" + DateTime.Now.ToFileTime() + ".txt";
 
             _streamWriter = File.CreateText(_currentFile);
             _streamWriter.WriteLine("Puzzle Opened at:  " + _gridOpenTime.ToString());
@@ -760,5 +724,4 @@ namespace EightPuzzle_Mouse
         }
         #endregion
     }
-
 }

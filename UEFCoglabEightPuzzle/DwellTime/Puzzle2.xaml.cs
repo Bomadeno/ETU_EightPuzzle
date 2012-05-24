@@ -13,7 +13,9 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.IO;
 using System.Collections;
-using TetComp;
+using Tobii.Eyetracking.Sdk;
+using Tobii.Eyetracking.Sdk.Exceptions;
+using Tobii.Eyetracking.Sdk.Time;
 
 namespace EightPuzzle_DwellTime
 {
@@ -26,7 +28,7 @@ namespace EightPuzzle_DwellTime
 
         public static Canvas _transCanvas;              //static transparent canvas 
         public static Canvas _hitCanvas;
-        public static StackPanel _puzzleHostingPanel;   //puzze hosting panel
+        public static StackPanel _puzzleHostingPanel;   //puzzle hosting panel
 
         public static Point _smoothGazePoint;
         public static Point _gazePoint;                 //Gaze Point
@@ -131,26 +133,20 @@ namespace EightPuzzle_DwellTime
             BitmapSource bitmap = (BitmapSource)masterImage.Source;
             _puzzleSize = new Size(bitmap.PixelWidth * 1.8, bitmap.PixelHeight * 1.8); //Set the size of the image
 
-            //check if a puzzle already exisits
+            //check if a puzzle already exists
             if (_dwellTimePuzzleGrid != null)
             {
                 _puzzleHostingPanel.Children.Remove(_dwellTimePuzzleGrid); //true remove it
             }
 
-            _dwellTimePuzzleGrid = new DwellTimePuzzleGrid(); //initialise _MousePuzzleGrid
-
+            _dwellTimePuzzleGrid = new DwellTimePuzzleGrid(); //initialize _MousePuzzleGrid
             _dwellTimePuzzleGrid.NumRows = _numRows; //number of rows in the grid
-
             _dwellTimePuzzleGrid.PuzzleImage = masterImage; //background image
-
             _dwellTimePuzzleGrid.PuzzleSize = _puzzleSize; //size of the puzzle
-
             _dwellTimePuzzleGrid.ConfigType = "B";         //Use game configuration B
             _dwellTimePuzzleGrid.StartConfig("ConfigB");       //Use start configuration B
 
             _puzzleHostingPanel.Children.Add(_dwellTimePuzzleGrid); //add grid to the user interface
-
-
         }
 
         private void GetGameConfig()
@@ -172,9 +168,6 @@ namespace EightPuzzle_DwellTime
             _first = _gameConfigList[0].ToString();
             _second = _gameConfigList[1].ToString();
             _last = _gameConfigList[2].ToString();
-
-
-
         }
 
         /// <summary>
@@ -182,7 +175,6 @@ namespace EightPuzzle_DwellTime
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GetGameConfig();
@@ -198,7 +190,6 @@ namespace EightPuzzle_DwellTime
 
         private void LoadTrackStatusObject()
         {
-
             this.axTetTrackStatus = new AxTetComp.AxTetTrackStatus();
 
             this.axTetTrackStatus.Enabled = true;
@@ -215,10 +206,10 @@ namespace EightPuzzle_DwellTime
             //this.Canvas_TrackStatus.Children.Add(host); // add the host to the track status canvas
             _hitCanvas.Children.Add(host);
 
-            // Retreive underlying references to ActiveX controls
+            // Retrieve underlying references to ActiveX controls
             tetTrackStatus = (ITetTrackStatus)axTetTrackStatus.GetOcx();
 
-            //*** try to contect to the server
+            //*** try to connect to the server
 
             try
             {
@@ -237,13 +228,8 @@ namespace EightPuzzle_DwellTime
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
-
-
         }
 
         void gazePointTimer_Tick(object sender, EventArgs e)
@@ -253,7 +239,6 @@ namespace EightPuzzle_DwellTime
             //tbMouse.Text = _smoothGazePoint.X.ToString() + " : " + _smoothGazePoint.Y.ToString();
             if (DwellTimePuzzleGrid.IsProcessingButton == false)
                 DwellTimeButtonB.OnHitTest(_smoothGazePoint);
-
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -308,14 +293,10 @@ namespace EightPuzzle_DwellTime
                     this.Close();
                 }
             }
-
         }
-
-       
 
         private void TetClientEvent_OnGazeData(ref TetGazeData gazeData)
         {
-
             float x, y;
             double xCoord, yCoord;
             int SCREEN_WIDTH = 1280;
@@ -334,10 +315,7 @@ namespace EightPuzzle_DwellTime
                 yCoord = y * SCREEN_HEIGHT;
 
                 _gazePoint = new Point(xCoord, yCoord);
-
-
             }//if interaction
-
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -348,8 +326,5 @@ namespace EightPuzzle_DwellTime
             if (tetTrackStatus.IsConnected) tetTrackStatus.Disconnect();
             if (tetTrackStatus.IsTracking) tetTrackStatus.Stop();
         }//method
-
-        
-
     }
 }

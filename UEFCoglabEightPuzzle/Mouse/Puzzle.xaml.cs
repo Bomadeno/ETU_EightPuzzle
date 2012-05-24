@@ -21,23 +21,20 @@ namespace EightPuzzle_Mouse
     public partial class Puzzle : Window
     {
         #region PRIVATE PROPERTIES
-        MousePuzzleGrid _MousePuzzleGrid;                         //instance of MousePuzzleGrid
-        private int _numRows;                           //Number of rows in the grid
-        private Image masterImage;                      //image resources
-        private Size _puzzleSize;                       //Size of the puzzle
 
-        private StreamReader _sr;               //read stream from text file
-        private ArrayList _gameConfigList;      //list of game configurations
+        MousePuzzleGrid mousePuzzleGrid;    //instance of MousePuzzleGrid
+        private int numRows;                //Number of rows in the grid
+        private Image masterImage;          //image resources
+        private Size puzzleSize;            //Size of the puzzle
         private int puzzleNumber;
 
         #endregion
         
-
         public Puzzle(int puzzleNumber)
         {
             InitializeComponent();
             this.puzzleNumber = puzzleNumber;
-            _numRows = 3; //default _numRows value
+            numRows = 3; //default _numRows value
         }
 
         private void NewGame()
@@ -45,74 +42,53 @@ namespace EightPuzzle_Mouse
             masterImage = (Image)this.Resources["MasterImage1"]; //Get the game image
 
             BitmapSource bitmap = (BitmapSource)masterImage.Source;
-            _puzzleSize = new Size(bitmap.PixelWidth * 1.8, bitmap.PixelHeight * 1.8); //Set the size of the image
+            puzzleSize = new Size(bitmap.PixelWidth * 1.8, bitmap.PixelHeight * 1.8); //Set the size of the image
 
-            //check if a puzzle already exisits
-            if (_MousePuzzleGrid != null)
+            //check if a puzzle already exists
+            if (mousePuzzleGrid != null)
             {
-                PuzzleHostingPanel.Children.Remove(_MousePuzzleGrid); //true remove it
+                PuzzleHostingPanel.Children.Remove(mousePuzzleGrid); //true remove it
             }
 
-            _MousePuzzleGrid = new MousePuzzleGrid(); //initialise _MousePuzzleGrid
-
-            _MousePuzzleGrid.NumRows = _numRows; //number of rows in the grid
-
-            _MousePuzzleGrid.PuzzleImage = masterImage; //background image
-
-            _MousePuzzleGrid.PuzzleSize = _puzzleSize; //size of the puzzle
+            mousePuzzleGrid = new MousePuzzleGrid(numRows); //initialize _MousePuzzleGrid
+            mousePuzzleGrid.PuzzleImage = masterImage; //background image
+            mousePuzzleGrid.PuzzleSize = puzzleSize; //size of the puzzle
 
             //get the game configuration
             GetGameConfig();
 
-            PuzzleHostingPanel.Children.Add(_MousePuzzleGrid); //add grid to the user interface
+            PuzzleHostingPanel.Children.Add(mousePuzzleGrid); //add grid to the user interface
 
             PuzzleHostingPanel.IsEnabled = true;    //ENABLE THE PUZZLE, SO THAT TILES CAN BE SELECTED
-
         }
 
-        /// <summary>
-        /// Open a new game once the window is opened
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //start a new game when the puzzle is loaded
+            //start a new game when the window is loaded
             NewGame();
         }
         
         private void GetGameConfig()
         {
-            _sr = new StreamReader("c:\\EightPuzzleConfig.txt");
-            _gameConfigList = new ArrayList();
-            string _line = "";
-            while (_line != null)
+            if (puzzleNumber == 0)
             {
-                _line = _sr.ReadLine();
-                if (_line != null)
-                {
-                    _gameConfigList.Add(_line);
-                }
+                mousePuzzleGrid.ConfigType = "T";           //Use game configuration A
+                mousePuzzleGrid.StartConfig("Trial");       //Use start configuration A
             }
-            _sr.Close();
-
-            if (_gameConfigList != null)
+            else if (puzzleNumber == 1)
             {
-                if (_gameConfigList[puzzleNumber].ToString() == "A")
-                {
-                    _MousePuzzleGrid.ConfigType = "A";           //Use game congiguration A
-                    _MousePuzzleGrid.StartConfig("ConfigA");       //Use start configuration A
-                }
-                else if (_gameConfigList[puzzleNumber].ToString() == "B")
-                {
-                    _MousePuzzleGrid.ConfigType = "B";         //Use game configuration B
-                    _MousePuzzleGrid.StartConfig("ConfigB");       //Use start configuration B
-                }
-                else if (_gameConfigList[puzzleNumber].ToString() == "C")
-                {
-                    _MousePuzzleGrid.ConfigType = "C";         //Use trial configuration
-                    _MousePuzzleGrid.StartConfig("C");       //Use the trial configuration to start
-                }
+                mousePuzzleGrid.ConfigType = "A";           //Use game configuration A
+                mousePuzzleGrid.StartConfig("ConfigA");       //Use start configuration A
+            }
+            else if(puzzleNumber == 2)
+            {
+                mousePuzzleGrid.ConfigType = "B";         //Use game configuration B
+                mousePuzzleGrid.StartConfig("ConfigB");       //Use start configuration B
+            }
+            else
+            {
+                mousePuzzleGrid.ConfigType = "C";
+                mousePuzzleGrid.StartConfig("C");
             }
         }
         
@@ -124,7 +100,7 @@ namespace EightPuzzle_Mouse
             }
             else if (e.Key == Key.PageDown)
             {
-                if (puzzleNumber < 2)
+                if (puzzleNumber < 3)
                 {
                     Window nextPrePuzzle = new PrePuzzle(puzzleNumber + 1);
                     nextPrePuzzle.Show();

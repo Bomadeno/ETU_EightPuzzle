@@ -36,7 +36,6 @@ namespace EightPuzzle_Mouse
         
         public MouseButton2()
         {
-            
             InitializeComponent();
 
             _redBrush = (Color)ColorConverter.ConvertFromString("#fe2712");
@@ -59,7 +58,6 @@ namespace EightPuzzle_Mouse
             //this.Padding = new Thickness(4);
             this.FontWeight = FontWeights.SemiBold;
 
-
             return _whiteButtonBackground;
         }
 
@@ -74,9 +72,5 @@ namespace EightPuzzle_Mouse
             this.Background = Brushes.White;   //set background to white when mouse leaves
             base.OnMouseLeave(e);
         }
-
-        
-
-      
     }
 }

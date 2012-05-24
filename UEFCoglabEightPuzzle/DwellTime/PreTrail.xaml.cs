@@ -29,19 +29,12 @@ namespace EightPuzzle_DwellTime
             {
                 this.Close();
             }
-            else if (e.Key == Key.PageUp)
-            {
-                Window thinkAloud = new ThinkAloud();
-                thinkAloud.Show();
-                this.Close();
-            }
             else
             {
                 Window trial = new Trial();
                 trial.Show();
                 this.Close();
             }
-            
         }
     }
 }

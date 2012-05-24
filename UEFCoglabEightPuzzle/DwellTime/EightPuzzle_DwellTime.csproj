@@ -37,14 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.ActiveXPlugin, Version=1.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Tobii\ClearView\AxInterop.ActiveXPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="AxInterop.TetComp, Version=1.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Tobii\ClearView\AxInterop.TetComp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -58,6 +50,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tobii.Eyetracking.Sdk">
+      <HintPath>..\libs\Tobii.Eyetracking.Sdk.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -97,12 +92,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DwellTimePuzzleGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Intro.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -156,12 +145,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ThinkAloud.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Trial.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -170,10 +153,6 @@
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ThinkAloud.xaml.cs">
-      <DependentUpon>ThinkAloud.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -192,9 +171,6 @@
     </Compile>
     <Compile Include="DwellTimePuzzleGrid.xaml.cs">
       <DependentUpon>DwellTimePuzzleGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Intro.xaml.cs">
-      <DependentUpon>Intro.xaml</DependentUpon>
     </Compile>
     <Compile Include="PrePuzzle1.xaml.cs">
       <DependentUpon>PrePuzzle1.xaml</DependentUpon>
@@ -248,25 +224,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="CVTrigComp">
-      <Guid>{EF59006E-8CA8-4E3B-AB25-C04923142B64}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="TetComp">
-      <Guid>{67EB5C8C-DAA1-4D87-BF8B-63ADF7CBF31C}</Guid>
-      <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -276,6 +236,12 @@
   <ItemGroup>
     <Resource Include="blackbackground.JPG" />
     <Resource Include="completedPuzzle.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\libs\tobiisdk.dll">
+      <Link>tobiisdk.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
