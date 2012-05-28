@@ -72,11 +72,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="GazeAgumentedButton.xaml">
+    <Page Include="DwellTimeButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GazeAugmentedPuzzleGrid.xaml">
+    <Page Include="GazeAugmentedButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -120,11 +120,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GazeAgumentedButton.xaml.cs">
-      <DependentUpon>GazeAgumentedButton.xaml</DependentUpon>
+    <Compile Include="DwellTimeButton.xaml.cs">
+      <DependentUpon>DwellTimeButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GazeAugmentedPuzzleGrid.xaml.cs">
-      <DependentUpon>GazeAugmentedPuzzleGrid.xaml</DependentUpon>
+    <Compile Include="GazeAugmentedButton.xaml.cs">
+      <DependentUpon>GazeAugmentedButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="MouseButton2.xaml.cs">
       <DependentUpon>MouseButton2.xaml</DependentUpon>

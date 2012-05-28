@@ -48,7 +48,7 @@ namespace EightPuzzle_Mouse
 		
 	}
 
-    enum MoveStatus
+    public enum MoveStatus
     {
         //*** DETERMINE IN WHICH DIRECTION A TILE CAN MOVE ***
         Up,             //Move the tile up

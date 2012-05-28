@@ -137,20 +137,20 @@ namespace EightPuzzle_DwellTime
         }
         #endregion
 
-		public DwellTimePuzzleGrid()
-		{
+        public DwellTimePuzzleGrid()
+        {
             //*** DEFAULT CONSTRUCTOR ***
-			InitializeComponent();
+            InitializeComponent();
 
-			// Centralize handling of all clicks in the puzzle grid.
-			//this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
+            // Centralize handling of all clicks in the puzzle grid.
+            //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
             this.AddHandler(DwellTimeButton.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
             this.AddHandler(DwellTimeButtonA.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickA));
             this.AddHandler(DwellTimeButtonB.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickB));
             this.AddHandler(DwellTimeButtonC.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickC));
             
            
-		}
+        }
 
         private void SetupTheDwellTimePuzzleGridStructure()
         {

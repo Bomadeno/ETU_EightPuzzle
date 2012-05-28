@@ -1,0 +1,9 @@
+
+*.cs
+*.cache
+*.baml
+*.resources
+*.txt
+*.exe
+*.pdb
+*.tlog

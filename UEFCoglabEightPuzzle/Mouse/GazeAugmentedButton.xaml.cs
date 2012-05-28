@@ -9,9 +9,9 @@ using System.Windows.Threading;
 namespace EightPuzzle_Mouse
 {
     /// <summary>
-    /// Interaction logic for GazeAgumentedButton.xaml
+    /// Interaction logic for GazeAugmentedButton.xaml
     /// </summary>
-    public partial class GazeAgumentedButton : Button
+    public partial class GazeAugmentedButton : Button
     {
         #region PRIVATE FIELDS AND PUBLIC PROPERTIES
         private static Int32 _DWELL_TIME;                           //Total dwell time for the class in milliseconds value is constant
@@ -50,7 +50,7 @@ namespace EightPuzzle_Mouse
 
         #endregion
 
-        public GazeAgumentedButton()
+        public GazeAugmentedButton()
         {
             InitializeComponent();
 
@@ -124,7 +124,7 @@ namespace EightPuzzle_Mouse
             
             //perform another hitest to make sure oint is still inside
             //if inside then decrement the counter
-            foreach (GazeAgumentedButton gab in _selectedButtonList)
+            foreach (GazeAugmentedButton gab in _selectedButtonList)
             {
                 Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
                 if (bounds.Contains(Puzzle._smoothGazePoint))
@@ -200,7 +200,7 @@ namespace EightPuzzle_Mouse
         internal static void ProcessHitTestResultsList(Point p)
         {
 
-            foreach (GazeAgumentedButton gab in _buttonList)
+            foreach (GazeAugmentedButton gab in _buttonList)
             {
 
                 Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
@@ -213,24 +213,19 @@ namespace EightPuzzle_Mouse
                     gab.RaiseEvent(_mouseEnterArgs);
 
                     break;
-
                 }
             }
-
-
         }
 
         public static void ButtonSelected()
         {
             //Click the selected button
-            foreach (GazeAgumentedButton gab in _selectedButtonList)
+            foreach (GazeAugmentedButton gab in _selectedButtonList)
             {
-                GazeAugmentedPuzzleGrid.IsProcessingButton = true;
+                //GazeAugmentedPuzzleGrid.IsProcessingButton = true;
                 gab.Background = _mouseClickedBrush;
                 gab.RaiseEvent(new RoutedEventArgs(ClickEvent));
             }
         }
-
     }
-
 }

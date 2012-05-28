@@ -11,7 +11,7 @@ namespace EightPuzzle_Mouse
     public partial class Puzzle : Window
     {
         #region PRIVATE PROPERTIES
-        //to make it compile! todo: remove or fix gaxeaugmented stuff nicely
+        //to make it compile! todo: remove or fix gazeaugmented stuff nicely
         public static Canvas _transCanvas;
         public static Canvas _hitCanvas;
         public static StackPanel _puzzleHostingPanel;
@@ -21,8 +21,6 @@ namespace EightPuzzle_Mouse
 
 
         PuzzleGrid mousePuzzleGrid;
-        private Image backgroundImage;
-        private Size puzzleSize;
         private PuzzleConfig puzzleNumber;
 
         #endregion
@@ -35,22 +33,13 @@ namespace EightPuzzle_Mouse
 
         private void NewGame()
         {
-            backgroundImage = (Image)this.Resources["MasterImage1"]; //Get the game image
-
-            BitmapSource bitmap = (BitmapSource)backgroundImage.Source;
-            puzzleSize = new Size(bitmap.PixelWidth * 1.8, bitmap.PixelHeight * 1.8); //Set the size of the image
-
             //check if a puzzle already exists
             if (mousePuzzleGrid != null)
-            {
                 PuzzleHostingPanel.Children.Remove(mousePuzzleGrid); //true remove it
-            }
 
-            mousePuzzleGrid = new PuzzleGrid(puzzleNumber); //initialize _MousePuzzleGrid
-
-            PuzzleHostingPanel.Children.Add(mousePuzzleGrid); //add grid to the user interface
-
-            PuzzleHostingPanel.IsEnabled = true;    //ENABLE THE PUZZLE, SO THAT TILES CAN BE SELECTED
+            mousePuzzleGrid = new PuzzleGrid(puzzleNumber, InteractionMode.PureMouse);
+            PuzzleHostingPanel.Children.Add(mousePuzzleGrid);
+            PuzzleHostingPanel.IsEnabled = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
