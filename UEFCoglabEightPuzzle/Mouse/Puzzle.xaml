@@ -11,5 +11,6 @@
         <!--PANEL THAT HOSTS THE GAZE GRID-->
         <StackPanel Canvas.Top="50" Canvas.Left="200" Margin="100" x:Name="PuzzleHostingPanel" />
         <Image Width="150" Height="150" Canvas.Bottom="5" Canvas.Left="10"  Source="completedPuzzle.jpg" />
+        <TextBlock Canvas.Left="386" Canvas.Top="863" FontSize="50" FontWeight="semibold" Height="92" Name="textBox1" TextAlignment="Justify" TextWrapping="Wrap">Press Q when you are done</TextBlock>
     </Canvas>
 </Window>

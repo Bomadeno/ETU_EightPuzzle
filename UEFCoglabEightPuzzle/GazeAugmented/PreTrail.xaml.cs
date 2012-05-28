@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for PreTrail.xaml

@@ -1,20 +1,11 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Effects;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Input;
-using System.Diagnostics;
 using System.IO;
 
-namespace EightPuzzle_GazeAugmented
+namespace EightPuzzle_Mouse
 {
     public partial class GazeAugmentedPuzzleGrid : Grid
     {
@@ -139,9 +130,9 @@ namespace EightPuzzle_GazeAugmented
             //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
             
             this.AddHandler(GazeAgumentedButton.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClick));
-            this.AddHandler(GazeAgumentedButtonA.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickA));
-            this.AddHandler(GazeAgumentedButtonB.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickB));
-            this.AddHandler(GazeAgumentedButtonC.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickC));
+            this.AddHandler(GazeAgumentedButton.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickA));
+            this.AddHandler(GazeAgumentedButton.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickB));
+            this.AddHandler(GazeAgumentedButton.ClickEvent, new RoutedEventHandler(OnPuzzleButtonClickC));
 
                        
         }
@@ -388,7 +379,7 @@ namespace EightPuzzle_GazeAugmented
             private void AConfig()
         {
             #region ROW 1
-            GazeAgumentedButtonA _00 = new GazeAgumentedButtonA();
+            var _00 = new GazeAgumentedButton();
             //Button _00 = new Button();
             //_00.FontSize = 24;
             //_00.Style = buttonStyle;
@@ -405,7 +396,7 @@ namespace EightPuzzle_GazeAugmented
             //_01.Content = "2";
             //this.Children.Add(_01);
 
-            GazeAgumentedButtonA _02 = new GazeAgumentedButtonA();
+            var _02 = new GazeAgumentedButton();
             //Button _02 = new Button();
            // _02.FontSize = 24;
            // _02.Style = buttonStyle;
@@ -416,7 +407,7 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 2
-            GazeAgumentedButtonA _10 = new GazeAgumentedButtonA();
+            var _10 = new GazeAgumentedButton();
             //Button _10 = new Button();
             //_10.FontSize = 24;
             //_10.Style = buttonStyle;
@@ -425,7 +416,7 @@ namespace EightPuzzle_GazeAugmented
             _10.Content = "5";
             this.Children.Add(_10);
 
-            GazeAgumentedButtonA _11 = new GazeAgumentedButtonA();
+            var _11 = new GazeAgumentedButton();
             //Button _11 = new Button();
             //_11.FontSize = 24;
             //_11.Style = buttonStyle;
@@ -434,7 +425,7 @@ namespace EightPuzzle_GazeAugmented
             _11.Content = "3";
             this.Children.Add(_11);
 
-            GazeAgumentedButtonA _12 = new GazeAgumentedButtonA();
+            var _12 = new GazeAgumentedButton();
             //Button _12 = new Button();
             //_12.FontSize = 24;
             //_12.Style = buttonStyle;
@@ -445,7 +436,7 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 3
-            GazeAgumentedButtonA _20 = new GazeAgumentedButtonA();
+            var _20 = new GazeAgumentedButton();
             //Button _20 = new Button();
             //_20.FontSize = 24;
            // _20.Style = buttonStyle;
@@ -454,7 +445,7 @@ namespace EightPuzzle_GazeAugmented
             _20.Content = "7";
             this.Children.Add(_20);
 
-            GazeAgumentedButtonA _21 = new GazeAgumentedButtonA();
+            var _21 = new GazeAgumentedButton();
             //Button _21 = new Button();
            // _21.FontSize = 24;
            // _21.Style = buttonStyle;
@@ -463,7 +454,7 @@ namespace EightPuzzle_GazeAugmented
             _21.Content = "6";
             this.Children.Add(_21);
 
-            GazeAgumentedButtonA _22 = new GazeAgumentedButtonA();
+            var _22 = new GazeAgumentedButton();
             //Button _22 = new Button();
             //_22.FontSize = 24;
            // _22.Style = buttonStyle;
@@ -481,7 +472,7 @@ namespace EightPuzzle_GazeAugmented
                 if (_isProcessingButton == true)
                 {
                     //  this.IsEnabled = false;
-                    GazeAgumentedButtonA b = e.Source as GazeAgumentedButtonA;  //identify the button that has been clicked
+                    var b = e.Source as GazeAgumentedButton;  //identify the button that has been clicked
                     if (b != null)
                     {
                         //Get the row and column of the button that has been cliced
@@ -506,7 +497,7 @@ namespace EightPuzzle_GazeAugmented
                 }//_isprocessingButton
             }
 
-            private void AnimatePieceA(GazeAgumentedButtonA b, int row, int col, MoveStatus moveStatus)
+            private void AnimatePieceA(GazeAgumentedButton b, int row, int col, MoveStatus moveStatus)
             {
 
 
@@ -573,7 +564,7 @@ namespace EightPuzzle_GazeAugmented
                 }
             }
 
-            private void MovePieceA(GazeAgumentedButtonA b, int row, int col)
+            private void MovePieceA(GazeAgumentedButton b, int row, int col)
             { //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
                 //Identify the cell to move
 
@@ -604,19 +595,19 @@ namespace EightPuzzle_GazeAugmented
             private void BConfig()
         {
             #region ROW 1
-            GazeAgumentedButtonB _00 = new GazeAgumentedButtonB();
+            var _00 = new GazeAgumentedButton();
             _00.SetValue(Grid.RowProperty, 0);
             _00.SetValue(Grid.ColumnProperty, 0);
             _00.Content = "6";
             this.Children.Add(_00);
 
-            GazeAgumentedButtonB _01 = new GazeAgumentedButtonB();
+            var _01 = new GazeAgumentedButton();
             _01.SetValue(Grid.RowProperty, 0);
             _01.SetValue(Grid.ColumnProperty, 1);
             _01.Content = "8";
             this.Children.Add(_01);
 
-            GazeAgumentedButtonB _02 = new GazeAgumentedButtonB();
+            var _02 = new GazeAgumentedButton();
             _02.SetValue(Grid.RowProperty, 0);
             _02.SetValue(Grid.ColumnProperty, 2);
             _02.Content = "1";
@@ -624,19 +615,19 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 2
-            //GazeAgumentedButtonB _10 = new GazeAgumentedButtonB();
+            //var _10 = new GazeAgumentedButtonB();
             //_10.SetValue(Grid.RowProperty, 1);
             //_10.SetValue(Grid.ColumnProperty, 0);
             //_10.Content = "5";
             //this.Children.Add(_10);
 
-            GazeAgumentedButtonB _11 = new GazeAgumentedButtonB();
+            var _11 = new GazeAgumentedButton();
             _11.SetValue(Grid.RowProperty, 1);
             _11.SetValue(Grid.ColumnProperty, 1);
             _11.Content = "7";
             this.Children.Add(_11);
 
-            GazeAgumentedButtonB _12 = new GazeAgumentedButtonB();
+            var _12 = new GazeAgumentedButton();
             _12.SetValue(Grid.RowProperty, 1);
             _12.SetValue(Grid.ColumnProperty, 2);
             _12.Content = "3";
@@ -644,19 +635,19 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 3
-            GazeAgumentedButtonB _20 = new GazeAgumentedButtonB();
+            var _20 = new GazeAgumentedButton();
             _20.SetValue(Grid.RowProperty, 2);
             _20.SetValue(Grid.ColumnProperty, 0);
             _20.Content = "5";
             this.Children.Add(_20);
 
-            GazeAgumentedButtonB _21 = new GazeAgumentedButtonB();
+            var _21 = new GazeAgumentedButton();
             _21.SetValue(Grid.RowProperty, 2);
             _21.SetValue(Grid.ColumnProperty, 1);
             _21.Content = "4";
             this.Children.Add(_21);
 
-            GazeAgumentedButtonB _22 = new GazeAgumentedButtonB();
+            var _22 = new GazeAgumentedButton();
             _22.SetValue(Grid.RowProperty, 2);
             _22.SetValue(Grid.ColumnProperty, 2);
             _22.Content = "2";
@@ -671,7 +662,7 @@ namespace EightPuzzle_GazeAugmented
                 if (_isProcessingButton == true)
                 {
                     //  this.IsEnabled = false;
-                    GazeAgumentedButtonB b = e.Source as GazeAgumentedButtonB;  //identify the button that has been clicked
+                    var b = e.Source as GazeAgumentedButton;  //identify the button that has been clicked
                     if (b != null)
                     {
                         //Get the row and column of the button that has been cliced
@@ -696,7 +687,7 @@ namespace EightPuzzle_GazeAugmented
                 }//_isprocessingButton
             }
 
-            private void AnimatePieceB(GazeAgumentedButtonB b, int row, int col, MoveStatus moveStatus)
+            private void AnimatePieceB(GazeAgumentedButton b, int row, int col, MoveStatus moveStatus)
             {
 
 
@@ -763,7 +754,7 @@ namespace EightPuzzle_GazeAugmented
                 }
             }
 
-            private void MovePieceB(GazeAgumentedButtonB b, int row, int col)
+            private void MovePieceB(GazeAgumentedButton b, int row, int col)
             { //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
                 //Identify the cell to move
 
@@ -794,19 +785,19 @@ namespace EightPuzzle_GazeAugmented
             private void CConfig()
         {
             #region ROW 1
-            GazeAgumentedButtonC _00 = new GazeAgumentedButtonC();
+            var _00 = new GazeAgumentedButton();
             _00.SetValue(Grid.RowProperty, 0);
             _00.SetValue(Grid.ColumnProperty, 0);
             _00.Content = "2";
             this.Children.Add(_00);
 
-            GazeAgumentedButtonC _01 = new GazeAgumentedButtonC();
+            var _01 = new GazeAgumentedButton();
             _01.SetValue(Grid.RowProperty, 0);
             _01.SetValue(Grid.ColumnProperty, 1);
             _01.Content = "1";
             this.Children.Add(_01);
 
-            GazeAgumentedButtonC _02 = new GazeAgumentedButtonC();
+            var _02 = new GazeAgumentedButton();
             _02.SetValue(Grid.RowProperty, 0);
             _02.SetValue(Grid.ColumnProperty, 2);
             _02.Content = "6";
@@ -814,19 +805,19 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 2
-            GazeAgumentedButtonC _10 = new GazeAgumentedButtonC();
+            var _10 = new GazeAgumentedButton();
             _10.SetValue(Grid.RowProperty, 1);
             _10.SetValue(Grid.ColumnProperty, 0);
             _10.Content = "4";
             this.Children.Add(_10);
 
-            //GazeAgumentedButtonC _11 = new GazeAgumentedButtonC();
+            //var _11 = new GazeAgumentedButton();
             //_11.SetValue(Grid.RowProperty, 1);
             //_11.SetValue(Grid.ColumnProperty, 1);
             //_11.Content = "7";
             //this.Children.Add(_11);
 
-            GazeAgumentedButtonC _12 = new GazeAgumentedButtonC();
+            var _12 = new GazeAgumentedButton();
             _12.SetValue(Grid.RowProperty, 1);
             _12.SetValue(Grid.ColumnProperty, 2);
             _12.Content = "8";
@@ -834,19 +825,19 @@ namespace EightPuzzle_GazeAugmented
             #endregion
 
             #region ROW 3
-            GazeAgumentedButtonC _20 = new GazeAgumentedButtonC();
+            var _20 = new GazeAgumentedButton();
             _20.SetValue(Grid.RowProperty, 2);
             _20.SetValue(Grid.ColumnProperty, 0);
             _20.Content = "7";
             this.Children.Add(_20);
 
-            GazeAgumentedButtonC _21 = new GazeAgumentedButtonC();
+            var _21 = new GazeAgumentedButton();
             _21.SetValue(Grid.RowProperty, 2);
             _21.SetValue(Grid.ColumnProperty, 1);
             _21.Content = "5";
             this.Children.Add(_21);
 
-            GazeAgumentedButtonC _22 = new GazeAgumentedButtonC();
+            var _22 = new GazeAgumentedButton();
             _22.SetValue(Grid.RowProperty, 2);
             _22.SetValue(Grid.ColumnProperty, 2);
             _22.Content = "3";
@@ -861,7 +852,7 @@ namespace EightPuzzle_GazeAugmented
                 if (_isProcessingButton == true)
                 {
                     //  this.IsEnabled = false;
-                    GazeAgumentedButtonC b = e.Source as GazeAgumentedButtonC;  //identify the button that has been clicked
+                    GazeAgumentedButton b = e.Source as GazeAgumentedButton;  //identify the button that has been clicked
                     if (b != null)
                     {
                         //Get the row and column of the button that has been cliced
@@ -886,7 +877,7 @@ namespace EightPuzzle_GazeAugmented
                 }//_isprocessingButton
             }
 
-            private void AnimatePieceC(GazeAgumentedButtonC b, int row, int col, MoveStatus moveStatus)
+            private void AnimatePieceC(GazeAgumentedButton b, int row, int col, MoveStatus moveStatus)
             {
 
 
@@ -955,7 +946,7 @@ namespace EightPuzzle_GazeAugmented
 
 
 
-            private void MovePieceC(GazeAgumentedButtonC b, int row, int col)
+            private void MovePieceC(GazeAgumentedButton b, int row, int col)
             { //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
                 //Identify the cell to move
 

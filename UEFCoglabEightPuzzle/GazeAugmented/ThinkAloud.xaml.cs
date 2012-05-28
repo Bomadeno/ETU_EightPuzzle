@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for Window1.xaml

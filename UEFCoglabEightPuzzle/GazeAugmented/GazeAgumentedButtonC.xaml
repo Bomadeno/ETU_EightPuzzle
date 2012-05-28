@@ -1,4 +1,4 @@
-﻿<Button x:Class="EightPuzzle_GazeAgumented.GazeAgumentedButtonC"
+﻿<Button x:Class="EightPuzzle_GazeAugmented.GazeAgumentedButtonC"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="200" Width="200">

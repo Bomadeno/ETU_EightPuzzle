@@ -15,7 +15,7 @@ using System.IO;
 using System.Collections;
 using TetComp;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for Puzzle2.xaml

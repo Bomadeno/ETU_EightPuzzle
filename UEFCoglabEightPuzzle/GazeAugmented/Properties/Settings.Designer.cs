@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EightPuzzle_GazeAgumented.Properties {
+namespace EightPuzzle_GazeAugmented.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

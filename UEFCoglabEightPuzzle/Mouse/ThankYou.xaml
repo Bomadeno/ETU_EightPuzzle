@@ -6,5 +6,6 @@
         <TextBlock FontSize="50" FontWeight="semibold" Margin="200,400,200,0" TextWrapping="Wrap" Height="98" VerticalAlignment="Top">
             Thank you for you participation.
         </TextBlock>
+        <TextBlock Height="32" HorizontalAlignment="Left" Margin="626,504,0,0" Name="textBlock1" Text="Press any key to continue..." VerticalAlignment="Top" Width="253" Foreground="DarkGray" />
     </Grid>
 </Window>

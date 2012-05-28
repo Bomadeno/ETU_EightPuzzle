@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.IO;
-using System.Collections;
-using TetComp;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for Trial.xaml
@@ -134,7 +125,6 @@ namespace EightPuzzle_GazeAgumented
             }
 
             _gazeAugmentedPuzzleGrid = new GazeAugmentedPuzzleGrid(); //initialise _MousePuzzleGrid
-
             _gazeAugmentedPuzzleGrid.NumRows = _numRows; //number of rows in the grid
 
             _gazeAugmentedPuzzleGrid.PuzzleImage = masterImage; //background image
@@ -155,12 +145,6 @@ namespace EightPuzzle_GazeAgumented
 
         }
 
-        /// <summary>
-        /// Open a new game once the window is opened
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //check to see whether or not to load the trackstaus canvas
@@ -168,15 +152,12 @@ namespace EightPuzzle_GazeAgumented
 
             //start a new game when the puzzle is loaded
             NewGame();
-
             //hide the cursor
             this.Cursor = Cursors.None;
-
         }
 
         private void LoadTrackStatusObject()
         {
-
             this.axTetTrackStatus = new AxTetComp.AxTetTrackStatus();
 
             this.axTetTrackStatus.Enabled = true;
@@ -215,24 +196,15 @@ namespace EightPuzzle_GazeAgumented
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
-
-
         }
 
         void gazePointTimer_Tick(object sender, EventArgs e)
         {
-
             _smoothGazePoint = _gazePoint; //Get the smooth gaze point  
             GazeAgumentedButton.OnHitTest(_smoothGazePoint);
             // tbMouse.Text = _smoothGazePoint.X.ToString() + " : " + _smoothGazePoint.Y.ToString();
-
-
-
         }
 
 
@@ -254,8 +226,6 @@ namespace EightPuzzle_GazeAgumented
                 preTrial.Show();
                 this.Close();
             }
-                
-
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -267,7 +237,6 @@ namespace EightPuzzle_GazeAgumented
 
         private void TetClientEvent_OnGazeData(ref TetGazeData gazeData)
         {
-
             float x, y;
             double xCoord, yCoord;
             int SCREEN_WIDTH = 1280;
@@ -288,10 +257,7 @@ namespace EightPuzzle_GazeAgumented
                 _gazePoint = new Point(xCoord, yCoord);
 
 
-            }//if interaction
-
-        }//method
-
-
+            }
+        }
     }
 }

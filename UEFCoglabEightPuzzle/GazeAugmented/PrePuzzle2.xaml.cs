@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Collections;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for PrePuzzle2.xaml

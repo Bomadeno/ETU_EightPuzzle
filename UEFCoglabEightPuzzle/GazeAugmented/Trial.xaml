@@ -1,4 +1,4 @@
-﻿<Window x:Class="EightPuzzle_GazeAgumented.Trial"
+﻿<Window x:Class="EightPuzzle_GazeAugmented.Trial"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Trial" Height="1024" Width="1280" WindowState="Maximized" WindowStyle="None" Loaded="Window_Loaded" MouseDown="Window_MouseDown" KeyDown="Window_KeyDown">

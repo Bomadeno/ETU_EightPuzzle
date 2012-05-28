@@ -1,4 +1,4 @@
-﻿<Window x:Class="EightPuzzle_GazeAgumented.Intro"
+﻿<Window x:Class="EightPuzzle_GazeAugmented.Intro"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="8-Puzzle" Height="1024" Width="1280" WindowState="Maximized" KeyDown="Window_KeyDown" WindowStyle="None">

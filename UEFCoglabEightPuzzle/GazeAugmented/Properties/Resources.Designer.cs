@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EightPuzzle_GazeAgumented.Properties {
+namespace EightPuzzle_GazeAugmented.Properties {
     using System;
     
     

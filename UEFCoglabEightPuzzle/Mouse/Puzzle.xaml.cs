@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
-using System.Collections;
 
 namespace EightPuzzle_Mouse
 {
@@ -21,27 +11,33 @@ namespace EightPuzzle_Mouse
     public partial class Puzzle : Window
     {
         #region PRIVATE PROPERTIES
+        //to make it compile! todo: remove or fix gaxeaugmented stuff nicely
+        public static Canvas _transCanvas;
+        public static Canvas _hitCanvas;
+        public static StackPanel _puzzleHostingPanel;
+        public static Point _smoothGazePoint;
+        public static Image _targetImage;
+        public static TextBlock tbMouse;
 
-        MousePuzzleGrid mousePuzzleGrid;    //instance of MousePuzzleGrid
-        private int numRows;                //Number of rows in the grid
-        private Image masterImage;          //image resources
-        private Size puzzleSize;            //Size of the puzzle
-        private int puzzleNumber;
+
+        PuzzleGrid mousePuzzleGrid;
+        private Image backgroundImage;
+        private Size puzzleSize;
+        private PuzzleConfig puzzleNumber;
 
         #endregion
         
-        public Puzzle(int puzzleNumber)
+        public Puzzle(PuzzleConfig puzzleNumber)
         {
             InitializeComponent();
             this.puzzleNumber = puzzleNumber;
-            numRows = 3; //default _numRows value
         }
 
         private void NewGame()
-        {    //*** START A NEW GAME ***
-            masterImage = (Image)this.Resources["MasterImage1"]; //Get the game image
+        {
+            backgroundImage = (Image)this.Resources["MasterImage1"]; //Get the game image
 
-            BitmapSource bitmap = (BitmapSource)masterImage.Source;
+            BitmapSource bitmap = (BitmapSource)backgroundImage.Source;
             puzzleSize = new Size(bitmap.PixelWidth * 1.8, bitmap.PixelHeight * 1.8); //Set the size of the image
 
             //check if a puzzle already exists
@@ -50,12 +46,7 @@ namespace EightPuzzle_Mouse
                 PuzzleHostingPanel.Children.Remove(mousePuzzleGrid); //true remove it
             }
 
-            mousePuzzleGrid = new MousePuzzleGrid(numRows); //initialize _MousePuzzleGrid
-            mousePuzzleGrid.PuzzleImage = masterImage; //background image
-            mousePuzzleGrid.PuzzleSize = puzzleSize; //size of the puzzle
-
-            //get the game configuration
-            GetGameConfig();
+            mousePuzzleGrid = new PuzzleGrid(puzzleNumber); //initialize _MousePuzzleGrid
 
             PuzzleHostingPanel.Children.Add(mousePuzzleGrid); //add grid to the user interface
 
@@ -68,55 +59,12 @@ namespace EightPuzzle_Mouse
             NewGame();
         }
         
-        private void GetGameConfig()
-        {
-            if (puzzleNumber == 0)
-            {
-                mousePuzzleGrid.ConfigType = "T";           //Use game configuration A
-                mousePuzzleGrid.StartConfig("Trial");       //Use start configuration A
-            }
-            else if (puzzleNumber == 1)
-            {
-                mousePuzzleGrid.ConfigType = "A";           //Use game configuration A
-                mousePuzzleGrid.StartConfig("ConfigA");       //Use start configuration A
-            }
-            else if(puzzleNumber == 2)
-            {
-                mousePuzzleGrid.ConfigType = "B";         //Use game configuration B
-                mousePuzzleGrid.StartConfig("ConfigB");       //Use start configuration B
-            }
-            else
-            {
-                mousePuzzleGrid.ConfigType = "C";
-                mousePuzzleGrid.StartConfig("C");
-            }
-        }
-        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            if (e.Key == Key.Q)
             {
-                this.Close();   //Close the window
-            }
-            else if (e.Key == Key.PageDown)
-            {
-                if (puzzleNumber < 3)
-                {
-                    Window nextPrePuzzle = new PrePuzzle(puzzleNumber + 1);
-                    nextPrePuzzle.Show();
-                    this.Close();
-                }
-                else
-                {
-                    Window thankYou = new ThankYou();
-                    thankYou.Show();
-                    this.Close();
-                }
-            }
-            else if (e.Key == Key.PageUp)
-            {
-                Window thisPuzzlesPrePuzzle = new PrePuzzle(puzzleNumber);
-                thisPuzzlesPrePuzzle.Show();
+                Window thankYou = new ThankYou();
+                thankYou.Show();
                 this.Close();
             }
         }

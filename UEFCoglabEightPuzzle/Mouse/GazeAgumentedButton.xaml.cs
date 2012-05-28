@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Collections;
 using System.Windows.Threading;
 
-namespace EightPuzzle_GazeAugmented
+namespace EightPuzzle_Mouse
 {
     /// <summary>
     /// Interaction logic for GazeAgumentedButton.xaml
@@ -79,10 +79,10 @@ namespace EightPuzzle_GazeAugmented
            
           //Set the button stlye
           //  this.Style = this.FindResource("TraficLightButton") as Style;
-            this.Background = whiteBackground();
+            this.Background = WhiteBackground();
         }
 
-        private SolidColorBrush whiteBackground()
+        private SolidColorBrush WhiteBackground()
         {
             _whiteButtonBackground = new SolidColorBrush();
             _whiteButtonBackground.Color = Colors.White;
@@ -126,8 +126,8 @@ namespace EightPuzzle_GazeAugmented
             //if inside then decrement the counter
             foreach (GazeAgumentedButton gab in _selectedButtonList)
             {
-                Rect bounds = gab.TransformToAncestor(Trial._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
-                if (bounds.Contains(Trial._smoothGazePoint))
+                Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
+                if (bounds.Contains(Puzzle._smoothGazePoint))
                 {
                     if (_dwellTimeCurrentButton > 0 )
                     {
@@ -153,7 +153,7 @@ namespace EightPuzzle_GazeAugmented
             _hitResultsList.Clear();
             
             // Set up a callback to receive the hit test results enumeration.
-            VisualTreeHelper.HitTest(Trial._hitCanvas,
+            VisualTreeHelper.HitTest(Puzzle._hitCanvas,
                                      null,
                                      new HitTestResultCallback(GazeButtonHitTestResult),
                                      new PointHitTestParameters(p));
@@ -180,8 +180,8 @@ namespace EightPuzzle_GazeAugmented
         internal static HitTestResultBehavior GazeButtonHitTestResult(HitTestResult result)
         {// Add the hit test result to the list that will be processed after the enumeration.
 
-            if ((Equals(Trial._hitCanvas, result.VisualHit)) || (Equals(Trial._transCanvas, result.VisualHit)) ||
-                (Equals(Trial.tbMouse, result.VisualHit)) || (Equals(Trial._puzzleHostingPanel, result.VisualHit)) || (Equals(Trial._targetImage, result.VisualHit)))
+            if ((Equals(Puzzle._hitCanvas, result.VisualHit)) || (Equals(Puzzle._transCanvas, result.VisualHit)) ||
+                (Equals(Puzzle.tbMouse, result.VisualHit)) || (Equals(Puzzle._puzzleHostingPanel, result.VisualHit)) || (Equals(Puzzle._targetImage, result.VisualHit)))
             {
             }
             else
@@ -203,7 +203,7 @@ namespace EightPuzzle_GazeAugmented
             foreach (GazeAgumentedButton gab in _buttonList)
             {
 
-                Rect bounds = gab.TransformToAncestor(Trial._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
+                Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
                 if (bounds.Contains(p))
                 {
                     //add the button to the selected button list

@@ -1,4 +1,4 @@
-﻿<Application x:Class="EightPuzzle_GazeAgumented.App"
+﻿<Application x:Class="EightPuzzle_GazeAugmented.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     StartupUri="Intro.xaml">

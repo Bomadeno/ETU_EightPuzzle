@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EightPuzzle_Mouse
 {
@@ -25,16 +15,9 @@ namespace EightPuzzle_Mouse
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                Application.Current.Shutdown();
-            }
-            else if (e.Key == Key.PageUp)
-            {
-                Window puzzle3 = new Puzzle(2);
-                puzzle3.Show();
-                this.Close();
-            }
+            Window startupWindow = new StartupWindow();
+            startupWindow.Show();
+            Close();
         }
     }
 }

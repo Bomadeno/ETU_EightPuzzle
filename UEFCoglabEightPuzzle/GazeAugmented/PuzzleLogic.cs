@@ -3,7 +3,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /*############################## ABOUT THIS CODE ################################
      * Puzzlelogic.cs

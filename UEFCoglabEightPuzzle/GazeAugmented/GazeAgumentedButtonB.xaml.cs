@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Collections;
 using System.Windows.Threading;
 
-namespace EightPuzzle_GazeAgumented
+namespace EightPuzzle_GazeAugmented
 {
     /// <summary>
     /// Interaction logic for GazeAgumentedButtonB.xaml

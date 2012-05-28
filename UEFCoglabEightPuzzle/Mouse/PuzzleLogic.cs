@@ -1,21 +1,19 @@
 using System;
 using System.Windows;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace EightPuzzle_Mouse
 {
     /*############################## ABOUT THIS CODE ################################
      * Puzzlelogic.cs
      * 
-     * The code was obtained (without any modifications) from the 15Puzzle application in the WPFSamples Demo sub-folder
+     * The code was obtained (prior to any modifications) from the 15Puzzle application in the WPFSamples Demo sub-folder
      * which is found in the Microsoft SDK, September 2006 CPT, WPFSamples 
      * C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\WPFSamples\Demos\15Puzzle                 
      * 
      * The code represents the main logic for the Tile Slide puzzle: the structure of each tile (puzzle cell) is defined,
      * the direction a tile can move, the actual movement of the tile and whether the puzzle has been completed
      * 
-     * Written By: Tersia Gowases
+     * Modified By: Tersia Gowases
      * February 2007
      * ##############################################################################
     */

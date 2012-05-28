@@ -49,6 +49,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tobii.Eyetracking.Sdk">
+      <HintPath>..\libs\Tobii.Eyetracking.Sdk.dll</HintPath>
+    </Reference>
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -69,13 +72,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GazeAgumentedButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GazeAugmentedPuzzleGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MouseButton2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MousePuzzleGrid.xaml">
+    <Page Include="PuzzleGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -93,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="StartupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ThankYou.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,11 +120,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GazeAgumentedButton.xaml.cs">
+      <DependentUpon>GazeAgumentedButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GazeAugmentedPuzzleGrid.xaml.cs">
+      <DependentUpon>GazeAugmentedPuzzleGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MouseButton2.xaml.cs">
       <DependentUpon>MouseButton2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MousePuzzleGrid.xaml.cs">
-      <DependentUpon>MousePuzzleGrid.xaml</DependentUpon>
+    <Compile Include="PuzzleGrid.xaml.cs">
+      <DependentUpon>PuzzleGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="PrePuzzle.xaml.cs">
       <DependentUpon>PrePuzzle.xaml</DependentUpon>
@@ -131,6 +152,9 @@
       <DependentUpon>Puzzle.xaml</DependentUpon>
     </Compile>
     <Compile Include="PuzzleLogic.cs" />
+    <Compile Include="StartupWindow.xaml.cs">
+      <DependentUpon>StartupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThankYou.xaml.cs">
       <DependentUpon>ThankYou.xaml</DependentUpon>
     </Compile>
@@ -149,6 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="completedPuzzle.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\libs\tobiisdk.dll">
+      <Link>tobiisdk.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
