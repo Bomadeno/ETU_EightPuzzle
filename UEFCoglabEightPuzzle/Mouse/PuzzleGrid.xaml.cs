@@ -25,7 +25,6 @@ namespace EightPuzzle_Mouse
 
     public partial class PuzzleGrid
     {
-
         #region PRIVATE FIELDS
 
         private readonly PuzzleConfig _puzzleConfig;
@@ -33,18 +32,18 @@ namespace EightPuzzle_Mouse
         private PuzzleLogic _puzzleLogic;
         private const int NumRows = 3;
 
-        private int _moves;                     //Number of moves that have been made
-        private string _selectedButtonNumber;   //Number of the button that has been clicked
-        private string _moveDirection;          //Direction that the selected tile has moved
-        private DateTime _gridOpenTime;         //Time the grid is opened
-        private DateTime _gridCloseTime;        //Time the grid is closed
-        private DateTime _currentTime;          //Time when the button is moved
-        private DateTime _firstMoveTime;        //Time that the fist moves was made
+        private int _moves; //Number of moves that have been made
+        private string _selectedButtonNumber; //Number of the button that has been clicked
+        private string _moveDirection; //Direction that the selected tile has moved
+        private DateTime _gridOpenTime; //Time the grid is opened
+        private DateTime _gridCloseTime; //Time the grid is closed
+        private DateTime _currentTime; //Time when the button is moved
+        private DateTime _firstMoveTime; //Time that the fist moves was made
 
-        private int _backTrack;                 //number of times the users backtracks
-        private string _previousMove;           //previously move
-        private DateTime _previousTime;         //time that the previous move was made
-        private string _data;                   //data to be written to text file
+        private int _backTrack; //number of times the users backtracks
+        private string _previousMove; //previously move
+        private DateTime _previousTime; //time that the previous move was made
+        private string _data; //data to be written to text file
 
 
         public static MoveStatus ButtonMoveStatus { get; private set; }
@@ -52,8 +51,8 @@ namespace EightPuzzle_Mouse
         private StreamWriter _streamWriter;
         private string _currentFile;
         private bool _isAnimating;
-        #endregion
 
+        #endregion
 
         public PuzzleGrid(PuzzleConfig puzzleConfig, InteractionMode interactionMode)
         {
@@ -79,10 +78,10 @@ namespace EightPuzzle_Mouse
             // Define rows and columns in the Grid
             for (var row = 0; row < NumRows; row++)
             {
-                var r = new RowDefinition { Height = GridLength.Auto };
+                var r = new RowDefinition {Height = GridLength.Auto};
                 RowDefinitions.Add(r);
 
-                var c = new ColumnDefinition { Width = GridLength.Auto };
+                var c = new ColumnDefinition {Width = GridLength.Auto};
                 ColumnDefinitions.Add(c);
             }
 
@@ -151,26 +150,26 @@ namespace EightPuzzle_Mouse
             //*** ONCE A TILE HAS BEEN CLICKED MOVE IT IF IT IS A VALID MOVE ***
 
             //The 'way' the button was activated shouldn't matter (mouse/gaze)
-            var buttonToMove = e.Source as Button;
+            var clickedButton = e.Source as Button;
 
-            if (buttonToMove == null || _isAnimating) return;
+            if (clickedButton == null || _isAnimating) return;
 
             //Get the row and column of the button that has been clicked
-            var row = (int)buttonToMove.GetValue(RowProperty);
-            var col = (int)buttonToMove.GetValue(ColumnProperty);
+            var row = (int) clickedButton.GetValue(RowProperty);
+            var column = (int) clickedButton.GetValue(ColumnProperty);
 
-            //check to see if which direct the button should be moved
-            var moveStatus = _puzzleLogic.GetMoveStatus(row, col);
+            //check to see in which direction the button should be moved
+            var moveStatus = _puzzleLogic.GetMoveStatus(row, column);
             ButtonMoveStatus = moveStatus; //todo fix this horrid static-cross-file-malarkey
 
             if (moveStatus == MoveStatus.BadMove) return;
 
             //as long as the move is valid, animate the movement by calling AnimatePiece
             _isAnimating = true;
-            AnimatePiece(buttonToMove, row, col, moveStatus);
+            AnimatePiece(clickedButton, row, column, moveStatus);
         }
-             
-        private void AnimatePiece(Button b, int row, int col, MoveStatus moveStatus)
+
+        private void AnimatePiece(Button b, int row, int column, MoveStatus moveStatus)
         {
             double distance; //distance the tile should move
             bool isMoveHorizontal; //determine if move is horizontal or vertical
@@ -178,13 +177,13 @@ namespace EightPuzzle_Mouse
             {
                 isMoveHorizontal = true;
                 // If direction is left then the distance = -1, Else direction is right and distance = 1 
-                distance = (moveStatus == MoveStatus.Left ? -1 : 1) * b.Width;
+                distance = (moveStatus == MoveStatus.Left ? -1 : 1)*b.Width;
             }
             else
             {
                 isMoveHorizontal = false;
                 // If direction is up then the distance = 1, Else direction is down and distance = -1
-                distance = (moveStatus == MoveStatus.Up ? -1 : 1) * b.Height;
+                distance = (moveStatus == MoveStatus.Up ? -1 : 1)*b.Height;
             }
 
             // pull the animation after it's complete, because we move change Grid cells.
@@ -192,46 +191,49 @@ namespace EightPuzzle_Mouse
             slideAnim.CurrentStateInvalidated += delegate(object sender2, EventArgs e2)
                                                      {
                                                          // Anonymous delegate -- invoke when done.
-                                                         var clock = (Clock)sender2;
+                                                         var clock = (Clock) sender2;
                                                          if (clock.CurrentState == ClockState.Active) return;
 
                                                          // remove the render transform and really move the piece in the Grid.
                                                          try
                                                          {
-                                                             LogicalMovePiece(b, row, col);
+                                                             LogicalMovePiece(b, row, column);
 
-                         
-                                                             _moveDirection = moveStatus.ToString();   //get the move direction and the button number
+
+                                                             _moveDirection = moveStatus.ToString();
+                                                                 //get the move direction and the button number
                                                              _selectedButtonNumber = b.Content.ToString();
                                                              //_previousMove = _selectedButtonNumber;      //Get the current and previously selected buttons
                                                              //_previousTime = _currentTime;
-                                                             _currentTime = DateTime.Now;            //Set the times when the move was made
+                                                             _currentTime = DateTime.Now;
+                                                                 //Set the times when the move was made
                                                              _isAnimating = false;
-                           
 
-                                                             PrintToTextFile();  //print data to text file
+
+                                                             PrintToTextFile(); //print data to text file
                                                          }
                                                          catch (Exception ex)
                                                          {
-                                                             MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                                             MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK,
+                                                                             MessageBoxImage.Error);
                                                          }
                                                      };
 
             var buttonTransform = new TranslateTransform(0, 0);
             b.RenderTransform = buttonTransform;
 
-               
+
             //perform the actual slide animation
             var directionProperty = isMoveHorizontal ? TranslateTransform.XProperty : TranslateTransform.YProperty;
             //rootFE.RenderTransform.BeginAnimation(directionProperty, slideAnim);
             b.RenderTransform.BeginAnimation(directionProperty, slideAnim);
         }
-       
-        private void LogicalMovePiece(Button b, int row, int col)
-        { //*** MOVE THE TILE, ASSUMING THE MOVE IS VALID***
+
+        private void LogicalMovePiece(Button b, int row, int column)
+        {
             //Identify the cell to move
-            
-            var newPosition = _puzzleLogic.MovePiece(row, col);
+
+            var newPosition = _puzzleLogic.MovePiece(row, column);
             try
             {
                 //change the position of the tile in the grid
@@ -253,34 +255,36 @@ namespace EightPuzzle_Mouse
         }
 
         public void MixUpPuzzle()
-        { //*** SCRAMBLE THE PUZZLE ***
+        {
             _puzzleLogic.MixUpPuzzle(); //Call MixUpPuzzle to shuffle and move the puzzles
-            
+
             short cellNumber = 1;
-            foreach (Button b in this.Children)
+            foreach (Button b in Children)
             {
                 PuzzleCell location = _puzzleLogic.FindCell(cellNumber++);
                 b.SetValue(ColumnProperty, location.Col);
-                b.SetValue(RowProperty, location.Row);         
+                b.SetValue(RowProperty, location.Row);
             }
         }
 
         #region TEXT FILE DATA
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+
+        private void GridLoaded(object sender, RoutedEventArgs e)
         {
             //get the time the window was opened
             _gridOpenTime = DateTime.Now;
 
-            _currentFile = "Mouse_Puzzle_Config" + Enum.GetName(typeof(PuzzleConfig), _puzzleConfig) + "_" + DateTime.Now.ToFileTime() + ".txt";
+            _currentFile = "Mouse_Puzzle_Config" + Enum.GetName(typeof (PuzzleConfig), _puzzleConfig) + "_" +
+                           DateTime.Now.ToFileTime() + ".txt";
 
             _streamWriter = File.CreateText(_currentFile);
-            _streamWriter.WriteLine("Puzzle Opened at:  " + _gridOpenTime.ToString());
-            _streamWriter.WriteLine("Time  |  Move Number  |  Selected button  |  Move Direction  |  Back Tracking  |  Move Latency");
+            _streamWriter.WriteLine("Puzzle Opened at:  " + _gridOpenTime);
+            _streamWriter.WriteLine(
+                "Time  |  Move Number  |  Selected button  |  Move Direction  |  Back Tracking  |  Move Latency");
             _streamWriter.Close();
-
         }
 
-        private void Grid_Unloaded(object sender, RoutedEventArgs e)
+        private void GridUnloaded(object sender, RoutedEventArgs e)
         {
             //get the window closing time as the window closes
             _gridCloseTime = DateTime.Now;
@@ -297,11 +301,11 @@ namespace EightPuzzle_Mouse
             _streamWriter.WriteLine("----------------------- GAME SUMARY -----------------------");
             _streamWriter.WriteLine("");
 
-            _streamWriter.WriteLine("Window Opened Duration - Full time: " + viewDuration.ToString());
-            _streamWriter.WriteLine("Game played Duration - Full time: " + playDuration.ToString());
-            
-            _streamWriter.WriteLine("Number of moves: " + _moves.ToString());
-            _streamWriter.WriteLine("Number of back tracks: " + _backTrack.ToString() );
+            _streamWriter.WriteLine("Window Opened Duration - Full time: " + viewDuration);
+            _streamWriter.WriteLine("Game played Duration - Full time: " + playDuration);
+
+            _streamWriter.WriteLine("Number of moves: " + _moves);
+            _streamWriter.WriteLine("Number of back tracks: " + _backTrack);
             _streamWriter.Close();
 
             //open the textFile and append the closing time
@@ -311,14 +315,14 @@ namespace EightPuzzle_Mouse
         {
             //Write data to text file in the following format
             //"Time  |  Move Number  |  Selected button  |  Move Direction  |  Back Tracking  |  Move Latency"
-            
-            _data = "";             //clear previous data if any
-            _data += _currentTime.ToLongTimeString() + "  |  ";     //Time
-            _data += _moves.ToString() + "   |  ";                   //move number
-            _data += _selectedButtonNumber + "  |  ";               //selected button
-            _data += _moveDirection + "  |  ";                   //move direction
-       
-            string bt = BackTracking();//backtracking
+
+            _data = ""; //clear previous data if any
+            _data += _currentTime.ToLongTimeString() + "  |  "; //Time
+            _data += _moves + "   |  "; //move number
+            _data += _selectedButtonNumber + "  |  "; //selected button
+            _data += _moveDirection + "  |  "; //move direction
+
+            string bt = BackTracking(); //backtracking
             _data += bt + "  |  ";
 
             string ml = InterMoveLatency(); //move latency
@@ -327,15 +331,13 @@ namespace EightPuzzle_Mouse
             _streamWriter = File.AppendText(_currentFile);
             _streamWriter.WriteLine(_data);
             _streamWriter.Close();
-
-
         }
 
         private string BackTracking()
         {
             //determine if the user backtracked
-                
-            if (_moves <= 1)            //Fist move so no back tracking
+
+            if (_moves <= 1) //Fist move so no back tracking
             {
                 _previousMove = _selectedButtonNumber;
                 return "";
@@ -357,9 +359,9 @@ namespace EightPuzzle_Mouse
 
         private string InterMoveLatency()
         {
-            //Determine the move latency between to moves
+            //Determine the move latency between two moves
 
-            if (_moves <= 1)            //Fist move so no duration
+            if (_moves <= 1) //Fist move so no duration
             {
                 _previousTime = _currentTime;
                 _firstMoveTime = _currentTime;
@@ -367,14 +369,12 @@ namespace EightPuzzle_Mouse
             }
             else
             {
-               
-                    TimeSpan diff = _currentTime - _previousTime;
-                   // return diff.Milliseconds.ToString();
-                    string time = diff.Minutes.ToString() + ":" + diff.Seconds.ToString() + ":" + diff.Milliseconds.ToString();
-                    return time;
-                
+                TimeSpan diff = _currentTime - _previousTime;
+                string time = diff.Minutes + ":" + diff.Seconds + ":" + diff.Milliseconds;
+                return time;
             }
         }
+
         #endregion
     }
 }

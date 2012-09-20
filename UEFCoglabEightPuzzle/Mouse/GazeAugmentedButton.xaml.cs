@@ -14,17 +14,17 @@ namespace EightPuzzle_Mouse
     public partial class GazeAugmentedButton : Button
     {
         #region PRIVATE FIELDS AND PUBLIC PROPERTIES
-        private static Int32 _DWELL_TIME;                           //Total dwell time for the class in milliseconds value is constant
-        private static Int32 _dwellTimeCurrentButton;                          //Dwell time of the button currently being selected
+        private static Int32 _dwellTime;                               //Total dwell time for the class in milliseconds value is constant
+        private static Int32 _dwellTimeCurrentButton;                   //Dwell time of the button currently being selected
 
-        private static ArrayList _buttonList = new ArrayList();                //List of all buttons that have been created
-        private static ArrayList _hitResultsList = new ArrayList();           //Stores the results of the hittest        
-        private static ArrayList _selectedButtonList = new ArrayList();         //List of the currently and previously selected buttons 
+        private static ArrayList _buttonList = new ArrayList();         //List of all buttons that have been created
+        private static ArrayList _hitResultsList = new ArrayList();     //Stores the results of the hittest        
+        private static ArrayList _selectedButtonList = new ArrayList(); //List of the currently and previously selected buttons 
 
-        private static DispatcherTimer _timer = new DispatcherTimer();     //Dwelltime timer
+        private static DispatcherTimer _dwellTimeTimer = new DispatcherTimer();
 
-        private static MouseEventArgs _mouseEnterArgs;// = new MouseEventArgs(Mouse.PrimaryDevice, 0);                                     //Mouse enter event argument
-        private static MouseEventArgs _mouseLeaveArgs;// = new MouseEventArgs(Mouse.PrimaryDevice, 0);                                      //mouse leave event argument
+        private static MouseEventArgs _mouseEnterArgs;                  //Mouse enter event argument
+        private static MouseEventArgs _mouseLeaveArgs;                  //mouse leave event argument
 
         /// <summary>
         /// Dwell time duration in milliseconds
@@ -33,19 +33,18 @@ namespace EightPuzzle_Mouse
         {
             set
             {
-                _DWELL_TIME = value;                             //Assign value for the class dwell time 
-                _dwellTimeCurrentButton = _DWELL_TIME;                        //Dwell time for the currently selected button
-                           
+                _dwellTime = value;
+                _dwellTimeCurrentButton = _dwellTime;
             }
         }
 
         #region COLORS and BRUSHES
-        private SolidColorBrush _mouseEnterBrush;     //mouse enter brush
-        private static SolidColorBrush _mouseClickedBrush;  //mouse clicked brush
+        private SolidColorBrush _mouseEnterBrush;
+        private static SolidColorBrush _mouseClickedBrush;
         private SolidColorBrush _whiteButtonBackground;
 
-        private Color _greenBrush = new Color();              //green brush
-        private Color _redBrush = new Color();              //red brush
+        private Color _greenBrush;
+        private Color _redBrush;
         #endregion
 
         #endregion
@@ -54,19 +53,16 @@ namespace EightPuzzle_Mouse
         {
             InitializeComponent();
 
-            //Add created button to the button list
             _buttonList.Add(this);
 
-            //initalize timer
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);      //timer interval is 100 milliseconds
-            _timer.Tick += new EventHandler(_timer_Tick);
+            _dwellTimeTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dwellTimeTimer.Tick += DwellTimeTimerTick;
 
             #region MOUSE EVENTS
-            _mouseEnterArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);
-            _mouseEnterArgs.RoutedEvent = Mouse.MouseEnterEvent;
+            _mouseEnterArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0) {RoutedEvent = Mouse.MouseEnterEvent};
 
-            _mouseLeaveArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);
-            _mouseLeaveArgs.RoutedEvent = Mouse.MouseLeaveEvent;
+            _mouseLeaveArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0) {RoutedEvent = Mouse.MouseLeaveEvent};
+
             #endregion
 
             #region BRUSHES
@@ -77,22 +73,17 @@ namespace EightPuzzle_Mouse
             _mouseClickedBrush = new SolidColorBrush(_redBrush);
             #endregion
            
-          //Set the button stlye
-          //  this.Style = this.FindResource("TraficLightButton") as Style;
-            this.Background = WhiteBackground();
+            Background = WhiteBackground();
         }
 
         private SolidColorBrush WhiteBackground()
         {
-            _whiteButtonBackground = new SolidColorBrush();
-            _whiteButtonBackground.Color = Colors.White;
+            _whiteButtonBackground = new SolidColorBrush {Color = Colors.White};
 
-            this.BorderBrush = new SolidColorBrush(Colors.Black);
-            this.Margin = new Thickness(10);
-            this.FontSize = 60;
-            //this.Padding = new Thickness(4);
-            this.FontWeight = FontWeights.SemiBold;
-
+            BorderBrush = new SolidColorBrush(Colors.Black);
+            Margin = new Thickness(10);
+            FontSize = 60;
+            FontWeight = FontWeights.SemiBold;
 
             return _whiteButtonBackground;
         }
@@ -100,9 +91,9 @@ namespace EightPuzzle_Mouse
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            this.Background = _mouseEnterBrush; //set background to green when mouse enters
+            Background = _mouseEnterBrush;
             //Start dwell timer
-            _timer.Start();
+            _dwellTimeTimer.Start();
             base.OnMouseEnter(e);
         }
 
@@ -110,8 +101,7 @@ namespace EightPuzzle_Mouse
         {
             this.Background = Brushes.White;   //set background to white when mouse leaves
 
-            //Stop dwell timer
-            _timer.Stop();
+            _dwellTimeTimer.Stop();
 
             //remove button from selected index
             _selectedButtonList.Clear();
@@ -119,10 +109,9 @@ namespace EightPuzzle_Mouse
             base.OnMouseLeave(e);
         }
 
-        void _timer_Tick(object sender, EventArgs e)
+        void DwellTimeTimerTick(object sender, EventArgs e)
         {
-            
-            //perform another hitest to make sure oint is still inside
+            //perform another hitest to make sure point is still inside
             //if inside then decrement the counter
             foreach (GazeAugmentedButton gab in _selectedButtonList)
             {
@@ -131,31 +120,25 @@ namespace EightPuzzle_Mouse
                 {
                     if (_dwellTimeCurrentButton > 0 )
                     {
-                        //decrement the timer 
-                        _dwellTimeCurrentButton--;  //decrement the timer 
+                        _dwellTimeCurrentButton--;
                     }
                 }
                 else
                 {
-
-                    //raise the mouse enter event
                     gab.RaiseEvent(_mouseLeaveArgs);
                     break;
                 }
             }
-            //else raise the mouseleave event
-
         }
 
         public static void OnHitTest(Point p)
         {
-            // Clear the contents of the list used for hit test results.
             _hitResultsList.Clear();
             
             // Set up a callback to receive the hit test results enumeration.
             VisualTreeHelper.HitTest(Puzzle.HitCanvas,
                                      null,
-                                     new HitTestResultCallback(GazeButtonHitTestResult),
+                                     GazeButtonHitTestResult,
                                      new PointHitTestParameters(p));
 
             // Perform actions on the hit test results list and the selected button list is empty
@@ -163,12 +146,6 @@ namespace EightPuzzle_Mouse
             {
                 ProcessHitTestResultsList(p);
             }
-
-            //check to see if gaze has left the currently selected button
-            //if (selectedButtonList.Count > 0)
-            //{
-
-            //}
         }
 
         /// <summary>
@@ -222,7 +199,6 @@ namespace EightPuzzle_Mouse
             //Click the selected button
             foreach (GazeAugmentedButton gab in _selectedButtonList)
             {
-                //GazeAugmentedPuzzleGrid.IsProcessingButton = true;
                 gab.Background = _mouseClickedBrush;
                 gab.RaiseEvent(new RoutedEventArgs(ClickEvent));
             }

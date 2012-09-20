@@ -6,14 +6,14 @@ namespace EightPuzzle_Mouse
     /// <summary>
     /// Interaction logic for ThankYou.xaml
     /// </summary>
-    public partial class ThankYou : Window
+    public partial class ThankYou
     {
         public ThankYou()
         {
             InitializeComponent();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void WindowKeyDown(object sender, KeyEventArgs e)
         {
             Window startupWindow = new StartupWindow();
             startupWindow.Show();

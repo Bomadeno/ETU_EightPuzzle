@@ -49,11 +49,11 @@ namespace EightPuzzle_Mouse
         private SolidColorBrush _animatedBrush;     //Brush to be animated
         private SolidColorBrush _whiteButtonBackground;
 
-        private Color _greenBrush = new Color();              //green brush
-        private Color _redBrush = new Color();              //red brush
+        private Color _greenBrush;              //green brush
+        private Color _redBrush;              //red brush
 
-        private Color _blueBrush0 = new Color();
-        private Color _blueBrush1 = new Color();
+        private Color _blueBrush0;
+        private Color _blueBrush1;
 
         private LinearGradientBrush _backgroundBrush;
         private GradientStop _gradientStop0;
@@ -73,8 +73,7 @@ namespace EightPuzzle_Mouse
 
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            _timer.Tick += new EventHandler(_timer_Tick);
-         //   _timer.Start();
+            _timer.Tick += _timer_Tick;
 
             #region MOUSE EVENTS
             _mouseEnterArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);
@@ -84,35 +83,30 @@ namespace EightPuzzle_Mouse
             _mouseLeaveArgs.RoutedEvent = Mouse.MouseLeaveEvent;
             #endregion
 
-            #region ANIMATION COLORS
-            //_greenBrush = (Color)ColorConverter.ConvertFromString("#66b032");     
+            #region ANIMATION COLORS  
             _redBrush = (Color)ColorConverter.ConvertFromString("#fe2712");
             _greenBrush = (Color)ColorConverter.ConvertFromString("#ffffff");
-        #endregion
+            #endregion
 
             #region COLOR ANIMATION
-            _animatedBrush = new SolidColorBrush();
-            _animatedBrush.Color = _greenBrush; //inital color
+            _animatedBrush = new SolidColorBrush {Color = _greenBrush};
 
-            _enterColorAnimation = new ColorAnimation();
-            _enterColorAnimation.To = _redBrush;
-            _enterColorAnimation.Duration = TimeSpan.FromMilliseconds(_DWELL_TIME);
+            _enterColorAnimation = new ColorAnimation
+                                       {To = _redBrush, Duration = TimeSpan.FromMilliseconds(_DWELL_TIME)};
             _enterClock = _enterColorAnimation.CreateClock();
-            _enterClock.CurrentTimeInvalidated += new EventHandler(_enterClock_CurrentTimeInvalidated);
+            _enterClock.CurrentTimeInvalidated += new EventHandler(EnterClockCurrentTimeInvalidated);
 
-            _leavecolorAnimation = new ColorAnimation();
-            _leavecolorAnimation.Duration = TimeSpan.FromMilliseconds(_DWELL_TIME/2);
+            _leavecolorAnimation = new ColorAnimation {Duration = TimeSpan.FromMilliseconds(_DWELL_TIME/2)};
             _leaveClock = _leavecolorAnimation.CreateClock();
             
             #endregion
 
             _dwelltime = _DWELL_TIME; //set the value for the dwell time
 
-           // this.Background =  buttonBackground();
-            this.Background = whiteBackground();
+            Background = whiteBackground();
         }
        
-        private LinearGradientBrush buttonBackground()
+        private LinearGradientBrush ButtonBackground()
         {
             _backgroundBrush = new LinearGradientBrush();
             _blueBrush0 = (Color)ColorConverter.ConvertFromString("#306EFF");
@@ -124,51 +118,47 @@ namespace EightPuzzle_Mouse
             _backgroundBrush.GradientStops.Add(_gradientStop0);
             _backgroundBrush.GradientStops.Add(_gradientStop1);
             
-            this.BorderBrush = new SolidColorBrush(Colors.Black);
-            this.BorderThickness = new Thickness(10);
-            this.Margin = new Thickness(10);
-            this.FontSize = 60;
-            this.FontWeight = FontWeights.SemiBold;
+            BorderBrush = new SolidColorBrush(Colors.Black);
+            BorderThickness = new Thickness(10);
+            Margin = new Thickness(10);
+            FontSize = 60;
+            FontWeight = FontWeights.SemiBold;
             return _backgroundBrush;
         }
         
         private SolidColorBrush whiteBackground()
         {
-            _whiteButtonBackground = new SolidColorBrush();
-            _whiteButtonBackground.Color = Colors.White;
+            _whiteButtonBackground = new SolidColorBrush {Color = Colors.White};
 
-            this.BorderBrush = new SolidColorBrush(Colors.Black);
-            this.Margin = new Thickness(10);
-            this.FontSize = 60;
-            //this.Padding = new Thickness(4);
-            this.FontWeight = FontWeights.SemiBold;
+            BorderBrush = new SolidColorBrush(Colors.Black);
+            Margin = new Thickness(10);
+            FontSize = 60;
+            FontWeight = FontWeights.SemiBold;
            
 
             return _whiteButtonBackground;
         }
       
         void _timer_Tick(object sender, EventArgs e)
+        {  
+            foreach (DwellTimeButton db in _selectedButtonList)
             {
-                
-                    foreach (DwellTimeButton db in _selectedButtonList)
-                    {
-                        Rect bounds = db.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
-                        if (bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == false))
-                        {
-                            _entered = true;
-                            _enteredButtonList.Add(db);
+                var bounds = db.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
+                if (bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == false))
+                {
+                    _entered = true;
+                    _enteredButtonList.Add(db);
                            
-                        }
-                        else if (!(bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == true)))
-                        {
+                }
+                else if (!(bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == true)))
+                {
                             
-                            db.RaiseEvent(_mouseLeaveArgs);
-                            _entered = false;
-                            _enteredButtonList.Clear();
-                           
-                        }
-                    }
+                    db.RaiseEvent(_mouseLeaveArgs);
+                    _entered = false;
+                    _enteredButtonList.Clear();    
+                }
             }
+        }
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
@@ -185,7 +175,7 @@ namespace EightPuzzle_Mouse
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            _timer.Start(); //stop the timer
+            _timer.Start(); //stop the timer ~bug? comment says stop the timer, but is lying - broken intent in code?
 
             _enterClock.Controller.Stop(); //pause the enter color animation
             if(!_isClicked)
@@ -210,15 +200,13 @@ namespace EightPuzzle_Mouse
 
             }
 
-            this.Background = _animatedBrush;
-            //ButtonAction();
+            Background = _animatedBrush;
         }
 
         private void LeaveColorAnimation()
         {
             if (_leaveClock.IsPaused) //resume the animation
             {
-
                 _leavecolorAnimation.From = _animatedBrush.Color;
                 _leavecolorAnimation.To = _greenBrush;
                 _animatedBrush.ApplyAnimationClock(SolidColorBrush.ColorProperty, _leaveClock);
@@ -231,8 +219,8 @@ namespace EightPuzzle_Mouse
                 _animatedBrush.ApplyAnimationClock(SolidColorBrush.ColorProperty, _leaveClock);
                 _leaveClock.Controller.Begin();
             }
-                this.Background = _animatedBrush;
-               // ButtonAction();
+                
+            Background = _animatedBrush;
         }
 
         protected override void OnClick()
@@ -247,17 +235,15 @@ namespace EightPuzzle_Mouse
             base.OnClick();
         }
 
-        void _enterClock_CurrentTimeInvalidated(object sender, EventArgs e)
+        void EnterClockCurrentTimeInvalidated(object sender, EventArgs e)
         {
             if (_enterClock.CurrentProgress.HasValue && _enteredButtonList.Count == 1)
             {
                 foreach (DwellTimeButton db in _enteredButtonList)
                 {
-                    if (_enterClock.CurrentProgress.Value >= 1) //&&move status !=badmove
+                    if (_enterClock.CurrentProgress.Value >= 1)
                     {
-                        //DwellTimePuzzleGrid.IsProcessingButton = true;
                         db.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                        //db.Content = "clicked";
                         _isClicked = true;
                         if (PuzzleGrid.ButtonMoveStatus != MoveStatus.BadMove)
                             this.Background = Brushes.White;
@@ -265,8 +251,6 @@ namespace EightPuzzle_Mouse
                     else
                         Puzzle.TbMouse.Text = _enterClock.CurrentProgress.Value.ToString();
                 }
-
-
             }
         }
 
@@ -283,7 +267,7 @@ namespace EightPuzzle_Mouse
                                      new PointHitTestParameters(p));
 
             // Perform actions on the hit test results list and the selected button list is empty
-            if ((_hitResultsList.Count > 0) && _entered==false) //(_selectedButtonList.Count <= 0))
+            if ((_hitResultsList.Count > 0) && _entered==false)
             {
                 ProcessHitTestResultsList(p);
             }
@@ -332,7 +316,4 @@ namespace EightPuzzle_Mouse
         #endregion
 
     }
-
-
-
 }
