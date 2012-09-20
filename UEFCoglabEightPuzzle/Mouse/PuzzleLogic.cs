@@ -22,12 +22,10 @@ namespace EightPuzzle_Mouse
 	{
         //*** STRUCTURE THAT DEFINES A PUZZLE CELL ***
 
-        //* PRIVATE FIELDS THAT DEFINE A CELL *
-		private int _row; // the row where the cell appears
-		private int _col; //the column where the cell appears
-		private int _cellNumber; // the cell or tile number of the cell
+		private readonly int _row; // the row where the cell appears
+		private readonly int _col; //the column where the cell appears
+		private readonly int _cellNumber; // the cell or tile number of the cell
 
-        //* PUBLIC PROPERTIES *
         public int Row { 
             get { return _row; } 
         }
@@ -39,22 +37,19 @@ namespace EightPuzzle_Mouse
         }
 
 		public PuzzleCell(int row, int col, int cellNumber)
-		{ //* INITIALIZE THE ROW, COL AND CELNUMBER*
+		{
 			_row = row;
 			_col = col;
 			_cellNumber = cellNumber;
 		}
-
-		
 	}
 
     public enum MoveStatus
     {
-        //*** DETERMINE IN WHICH DIRECTION A TILE CAN MOVE ***
-        Up,             //Move the tile up
-        Down,           //Move the tile down
-        Left,           //Move the tile left    
-        Right,          //Move the tile right
+        Up,
+        Down,
+        Left,   
+        Right,
         BadMove         //Cannot move the tile
     }
 
@@ -69,11 +64,9 @@ namespace EightPuzzle_Mouse
         PuzzleCell _foundCell;
 
         public PuzzleLogic(int numRows)
-        {   //*** CONSTRUCTOR ***
-
-            _numRows = numRows;     //define the number of rows of the puzzle
-            _cells = new short[_numRows, _numRows]; //define the size of array of cells
-            //short tileNumber = 1;
+        {
+            _numRows = numRows;
+            _cells = new short[_numRows, _numRows];
 
             _cells[0, 0] = 1;
             _cells[0, 1] = 2;
@@ -87,22 +80,13 @@ namespace EightPuzzle_Mouse
             _cells[2, 1] = 6;
             _cells[2, 2] = 7;
 
-            //for (int r = 0; r < _numRows; r++)
-            //{
-            //    for (int c = 0; c < _numRows; c++)
-            //    {
-            //        _cells[r, c] = tileNumber++; //assign a tile number to each cell in the arrary
-            //    }
-            //}
-
             _emptyCol = _numRows - 2; //find the column of the empty cell
             _emptyRow = _numRows - 2; //find the row of the empty cell
             _cells[_emptyRow, _emptyCol] = EMPTY_CELL_ID; // overwrite the last cell with the empty cell ID
         }
 
-		public bool IsEmptyCell(int row, int col)
+	    private bool IsEmptyCell(int row, int col)
 		{
-            //*** FIND OUT IF THE CURRENT CELL IS THE EMPTY CELL ***
             return (row == _emptyRow && col == _emptyCol); //Return "True" if it is the empty cell. Else return "False"
 		}
 
@@ -116,7 +100,7 @@ namespace EightPuzzle_Mouse
 
             #region the four directions that the empty cell can be moved:
             /*
-             only a tile is positioned next to the eempty tile can be moved
+             only a tile positioned next to the empty tile can be moved
  	                    -----
 	                    |  1 |
                    -----|----|-----

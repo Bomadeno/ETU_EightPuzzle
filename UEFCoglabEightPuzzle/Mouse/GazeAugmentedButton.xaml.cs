@@ -126,8 +126,8 @@ namespace EightPuzzle_Mouse
             //if inside then decrement the counter
             foreach (GazeAugmentedButton gab in _selectedButtonList)
             {
-                Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
-                if (bounds.Contains(Puzzle._smoothGazePoint))
+                Rect bounds = gab.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
+                if (bounds.Contains(Puzzle.SmoothGazePoint))
                 {
                     if (_dwellTimeCurrentButton > 0 )
                     {
@@ -153,7 +153,7 @@ namespace EightPuzzle_Mouse
             _hitResultsList.Clear();
             
             // Set up a callback to receive the hit test results enumeration.
-            VisualTreeHelper.HitTest(Puzzle._hitCanvas,
+            VisualTreeHelper.HitTest(Puzzle.HitCanvas,
                                      null,
                                      new HitTestResultCallback(GazeButtonHitTestResult),
                                      new PointHitTestParameters(p));
@@ -180,8 +180,8 @@ namespace EightPuzzle_Mouse
         internal static HitTestResultBehavior GazeButtonHitTestResult(HitTestResult result)
         {// Add the hit test result to the list that will be processed after the enumeration.
 
-            if ((Equals(Puzzle._hitCanvas, result.VisualHit)) || (Equals(Puzzle._transCanvas, result.VisualHit)) ||
-                (Equals(Puzzle.tbMouse, result.VisualHit)) || (Equals(Puzzle._puzzleHostingPanel, result.VisualHit)) || (Equals(Puzzle._targetImage, result.VisualHit)))
+            if ((Equals(Puzzle.HitCanvas, result.VisualHit)) || (Equals(Puzzle.TransCanvas, result.VisualHit)) ||
+                (Equals(Puzzle.TbMouse, result.VisualHit)) || (Equals(Puzzle._puzzleHostingPanel, result.VisualHit)) || (Equals(Puzzle.TargetImage, result.VisualHit)))
             {
             }
             else
@@ -203,7 +203,7 @@ namespace EightPuzzle_Mouse
             foreach (GazeAugmentedButton gab in _buttonList)
             {
 
-                Rect bounds = gab.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
+                Rect bounds = gab.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, gab.ActualWidth, gab.ActualHeight));
                 if (bounds.Contains(p))
                 {
                     //add the button to the selected button list

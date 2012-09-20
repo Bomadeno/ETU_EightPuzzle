@@ -1,60 +1,58 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace EightPuzzle_Mouse
 {
     /// <summary>
     /// Interaction logic for Puzzle1.xaml
     /// </summary>
-    public partial class Puzzle : Window
+    public partial class Puzzle
     {
         #region PRIVATE PROPERTIES
         //to make it compile! todo: remove or fix gazeaugmented stuff nicely
-        public static Canvas _transCanvas;
-        public static Canvas _hitCanvas;
+        //todo static... why?
+        public static Canvas TransCanvas;
+        public static Canvas HitCanvas;
         public static StackPanel _puzzleHostingPanel;
-        public static Point _smoothGazePoint;
-        public static Image _targetImage;
-        public static TextBlock tbMouse;
+        public static Point SmoothGazePoint;
+        public static Image TargetImage;
+        public static TextBlock TbMouse;
 
 
-        PuzzleGrid mousePuzzleGrid;
-        private PuzzleConfig puzzleNumber;
+        private PuzzleGrid _mousePuzzleGrid;
+        private readonly PuzzleConfig _puzzleNumber;
 
         #endregion
         
         public Puzzle(PuzzleConfig puzzleNumber)
         {
             InitializeComponent();
-            this.puzzleNumber = puzzleNumber;
+            _puzzleNumber = puzzleNumber;
         }
 
         private void NewGame()
         {
-            //check if a puzzle already exists
-            if (mousePuzzleGrid != null)
-                PuzzleHostingPanel.Children.Remove(mousePuzzleGrid); //true remove it
+            if (_mousePuzzleGrid != null)
+                PuzzleHostingPanel.Children.Remove(_mousePuzzleGrid);
 
-            mousePuzzleGrid = new PuzzleGrid(puzzleNumber, InteractionMode.PureMouse);
-            PuzzleHostingPanel.Children.Add(mousePuzzleGrid);
+            _mousePuzzleGrid = new PuzzleGrid(_puzzleNumber, InteractionMode.PureMouse);
+            PuzzleHostingPanel.Children.Add(_mousePuzzleGrid);
             PuzzleHostingPanel.IsEnabled = true;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            //start a new game when the window is loaded
             NewGame();
         }
         
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void WindowKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Q)
             {
                 Window thankYou = new ThankYou();
                 thankYou.Show();
-                this.Close();
+                Close();
             }
         }
     }

@@ -6,23 +6,23 @@ namespace EightPuzzle_Mouse
     /// <summary>
     /// Interaction logic for PrePuzzle1.xaml
     /// </summary>
-    public partial class PrePuzzle : Window
+    public partial class PrePuzzle
     {
-        private PuzzleConfig puzzleNumber;
+        private readonly PuzzleConfig _puzzleNumber;
 
         public PrePuzzle() : this(0) {}
 
         public PrePuzzle(PuzzleConfig puzzleNumber)
         {
             InitializeComponent();
-            this.puzzleNumber = puzzleNumber;
+            _puzzleNumber = puzzleNumber;
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void WindowKeyDown(object sender, KeyEventArgs e)
         {
-            Window puzzle1 = new Puzzle(puzzleNumber);
+            Window puzzle1 = new Puzzle(_puzzleNumber);
             puzzle1.Show();
-            this.Close();
+            Close();
         }
     }
 }

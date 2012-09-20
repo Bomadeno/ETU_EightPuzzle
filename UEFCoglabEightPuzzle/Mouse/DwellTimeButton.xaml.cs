@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections;
 using System.Windows.Threading;
 
@@ -23,9 +15,9 @@ namespace EightPuzzle_Mouse
     public partial class DwellTimeButton : Button
     {
         #region PRIVATE FIELDS AND PUBLIC PROPERTIES
-        private static ArrayList _buttonList = new ArrayList();                //List of all buttons that have been created
-        private static ArrayList _hitResultsList = new ArrayList();           //Stores the results of the hittest        
-        private static ArrayList _selectedButtonList = new ArrayList();         //List of the currently and previously selected buttons 
+        private static ArrayList _buttonList = new ArrayList();             //List of all buttons that have been created
+        private static ArrayList _hitResultsList = new ArrayList();         //Stores the results of the hit-test        
+        private static ArrayList _selectedButtonList = new ArrayList();     //List of the currently and previously selected buttons 
         private static ArrayList _enteredButtonList = new ArrayList();
 
         private DispatcherTimer _timer;
@@ -43,15 +35,15 @@ namespace EightPuzzle_Mouse
             }
         }
 
-        private static bool _entered = false;        //determine if gaze is inside button
+        private static bool _entered = false;                               //determine if gaze is inside button
 
         private static MouseEventArgs _mouseEnterArgs;
         private static MouseEventArgs _mouseLeaveArgs;
 
         private AnimationClock _enterClock;
         private AnimationClock _leaveClock;
-        private ColorAnimation _enterColorAnimation;// = new ColorAnimation();
-        private ColorAnimation _leavecolorAnimation; // = new ColorAnimation();
+        private ColorAnimation _enterColorAnimation;                        // = new ColorAnimation();
+        private ColorAnimation _leavecolorAnimation;                        // = new ColorAnimation();
      
         #region COLORS and BRUSHES
         private SolidColorBrush _animatedBrush;     //Brush to be animated
@@ -77,7 +69,6 @@ namespace EightPuzzle_Mouse
 
             _isClicked = false;
 
-            //add the button to the button list
             _buttonList.Add(this);
 
             _timer = new DispatcherTimer();
@@ -161,14 +152,14 @@ namespace EightPuzzle_Mouse
                 
                     foreach (DwellTimeButton db in _selectedButtonList)
                     {
-                        Rect bounds = db.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
-                        if (bounds.Contains(Puzzle._smoothGazePoint) && (_entered == false))
+                        Rect bounds = db.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
+                        if (bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == false))
                         {
                             _entered = true;
                             _enteredButtonList.Add(db);
                            
                         }
-                        else if (!(bounds.Contains(Puzzle._smoothGazePoint) && (_entered == true)))
+                        else if (!(bounds.Contains(Puzzle.SmoothGazePoint) && (_entered == true)))
                         {
                             
                             db.RaiseEvent(_mouseLeaveArgs);
@@ -272,7 +263,7 @@ namespace EightPuzzle_Mouse
                             this.Background = Brushes.White;
                     }
                     else
-                        Puzzle.tbMouse.Text = _enterClock.CurrentProgress.Value.ToString();
+                        Puzzle.TbMouse.Text = _enterClock.CurrentProgress.Value.ToString();
                 }
 
 
@@ -286,7 +277,7 @@ namespace EightPuzzle_Mouse
             _hitResultsList.Clear();
 
             // Set up a callback to receive the hit test results enumeration.
-            VisualTreeHelper.HitTest(Puzzle._hitCanvas,
+            VisualTreeHelper.HitTest(Puzzle.HitCanvas,
                                      null,
                                      new HitTestResultCallback(GazeButtonHitTestResult),
                                      new PointHitTestParameters(p));
@@ -302,8 +293,8 @@ namespace EightPuzzle_Mouse
         internal static HitTestResultBehavior GazeButtonHitTestResult(HitTestResult result)
         {// Add the hit test result to the list that will be processed after the enumeration.
 
-            if ((Equals(Puzzle._hitCanvas, result.VisualHit)) || (Equals(Puzzle._transCanvas, result.VisualHit)) ||
-                (Equals(Puzzle.tbMouse, result.VisualHit)) || (Equals(Puzzle.tbMouse, result.VisualHit)) || (Equals(Puzzle._targetImage, result.VisualHit)))
+            if ((Equals(Puzzle.HitCanvas, result.VisualHit)) || (Equals(Puzzle.TransCanvas, result.VisualHit)) ||
+                (Equals(Puzzle.TbMouse, result.VisualHit)) || (Equals(Puzzle.TbMouse, result.VisualHit)) || (Equals(Puzzle.TargetImage, result.VisualHit)))
             {
             }
             else
@@ -321,7 +312,7 @@ namespace EightPuzzle_Mouse
             foreach (DwellTimeButton db in _buttonList)
             {
 
-                Rect bounds = db.TransformToAncestor(Puzzle._hitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
+                Rect bounds = db.TransformToAncestor(Puzzle.HitCanvas).TransformBounds(new Rect(0, 0, db.ActualWidth, db.ActualHeight));
                 if (bounds.Contains(p))
                 {
 
