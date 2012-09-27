@@ -105,7 +105,7 @@ namespace EightPuzzle_Mouse
             switch (_interactionMode)
             {
                 case InteractionMode.PureMouse:
-                    return new MouseButton2();
+                    return new MouseButton();
                 case InteractionMode.GazeAugmented:
                     return new GazeAugmentedButton();
                 case InteractionMode.DwellTime:

@@ -1,8 +1,8 @@
 ﻿<Window x:Class="EightPuzzle_Mouse.StartupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Eight Puzzle Experiment" Height="345" Width="297">
-    <Grid Height="267" Width="268">
+        Title="Eight Puzzle Experiment" Height="400" Width="315">
+    <Grid Height="300" Width="268" Margin="10,20,11,24" VerticalAlignment="Top">
         <Button Content="Mouse" Height="56" HorizontalAlignment="Left" Name="mousePuzzleStartButton" VerticalAlignment="Top" Width="268" Click="startButton_Click" />
         <Button Content="Dwell Time" Height="56" HorizontalAlignment="Left" Margin="0,62,0,0" Name="dwellTimePuzzleStartButton" VerticalAlignment="Top" Width="268" IsEnabled="False" Click="startButton_Click" />
         <Button Content="Gaze Augmented" Height="56" HorizontalAlignment="Left" Margin="0,124,0,0" Name="gazeAugStartButton" VerticalAlignment="Top" Width="268" IsEnabled="False" Click="startButton_Click" />
@@ -12,5 +12,6 @@
         <RadioButton GroupName="ConfigSelect" Content="Config C" Height="16" HorizontalAlignment="Left" Margin="174,209,0,0" Name="radioConfigC" VerticalAlignment="Top" />
         <TextBlock Height="17" HorizontalAlignment="Left" Margin="0,238,0,0" Name="etStatusLabel" Text="Status:" VerticalAlignment="Top" Width="73" TextAlignment="Right" Foreground="#FF505050" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="79,238,0,0" Name="etStatus" Text="starting..." VerticalAlignment="Top" Width="189" />
+        <Button Content="Calibrate" HorizontalAlignment="Left" Margin="10,266,0,0" Name ="calibrate" VerticalAlignment="Top" Width="248" Click="calibrate_Click"/>
     </Grid>
 </Window>

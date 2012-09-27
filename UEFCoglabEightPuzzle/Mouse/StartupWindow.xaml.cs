@@ -1,12 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace EightPuzzle_Mouse
 {
     /// <summary>
     /// Interaction logic for StartupWindow.xaml
     /// </summary>
-    public partial class StartupWindow : Window
+    public partial class StartupWindow
     {
+
         public StartupWindow()
         {
             InitializeComponent();
@@ -36,6 +38,10 @@ namespace EightPuzzle_Mouse
                 firstPuzzle.Show();
                 Close();
             }
+        }
+
+        private void calibrate_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

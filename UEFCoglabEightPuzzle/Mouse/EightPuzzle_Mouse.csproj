@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +44,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -52,9 +55,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tobii.Eyetracking.Sdk">
-      <HintPath>..\libs\Tobii.Eyetracking.Sdk.dll</HintPath>
-    </Reference>
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -67,6 +67,7 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -83,7 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MouseButton2.xaml">
+    <Page Include="MouseButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,11 +127,17 @@
     <Compile Include="DwellTimeButton.xaml.cs">
       <DependentUpon>DwellTimeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ETUHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ETUHost.Designer.cs">
+      <DependentUpon>ETUHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="GazeAugmentedButton.xaml.cs">
       <DependentUpon>GazeAugmentedButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MouseButton2.xaml.cs">
-      <DependentUpon>MouseButton2.xaml</DependentUpon>
+    <Compile Include="MouseButton.xaml.cs">
+      <DependentUpon>MouseButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="PuzzleGrid.xaml.cs">
       <DependentUpon>PuzzleGrid.xaml</DependentUpon>
@@ -179,13 +186,18 @@
     <Resource Include="completedPuzzle.JPG" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\libs\tobiisdk.dll">
-      <Link>tobiisdk.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Salvage\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Salvage\" />
+    <COMReference Include="ETUDriver">
+      <Guid>{8B119E5D-504C-42E1-9FD3-70A2CA555BEC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
